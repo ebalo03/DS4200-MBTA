@@ -14,9 +14,23 @@
       pointer-events: none;
       opacity: 0;
     }
+
+    #vis.d3-embed {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #vis.d3-embed details,
+    #vis.d3-embed details summary {
+      position: relative;
+    }    
   </style>
 </head>
 <body>
+
+  <div id="vis" class="d3-embed"></div>
   <svg width="800" height="500"></svg>
 
   <script>
