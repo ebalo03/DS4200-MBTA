@@ -170,6 +170,23 @@
       .style("font-size", "16px")
       .text("Scatter Plot of Speed Restrictions vs Days of Restriction Active (2023-2025)");
 
+    // X-Axis Title
+    svg.append("text")
+        .attr("x", width / 2)           
+        .attr("y", height + margin.bottom - 10)  
+        .attr("text-anchor", "middle") 
+        .style("font-size", "14px") 
+        .text("Restriction Active (Avg. Days)");
+    
+    // Y-Axis Title
+    svg.append("text")
+        .attr("transform", "rotate(-90)")  
+        .attr("x", -height / 2)           
+        .attr("y", -margin.left + 20)     
+        .attr("text-anchor", "middle")    
+        .style("font-size", "14px") 
+        .text("Speed (MPH)");
+
   </script>
 </body>
 </html>
