@@ -27,18 +27,29 @@
             </p>
 
             <h2>Data Overview</h2>
-            <p>Describe the dataset, including size, source, and attributes.</p>
+            <p>We used several datasets from the MBTA’s Blue Book Open Data Portal. The datasets we used to make our visualizations were:
+                MBTA Monthly Ridership By Mode and Line and the MBTA Rapid Transit Speed Restrictions by Day. The MBTA Monthly Ridership By Mode and Line
+                dataset consists of over 4000 records containing the total and average daily ridership per month by day type (weekend or workday), transportation 
+                mode, and line. Our other dataset, the MBTA Rapid Transit Speed Restrictions by Day consisted of over 100,000 observations of daily speed restrictions from 2023 to 2025, which
+                we reduced by taking monthly averages of the speed restrictions to minimize the size of the data to around 100 observations. 
+                The attributes included information about the line where the speed restriction was active, the number of speed restrictions at the beginning and end of the month,
+                the speed limit of the restriction, the distance of the restriction, and the number of active restrictions per line. 
+
+            </p>
             
             <h2>Data Visualizations</h2>
             <div class="visualization">
                 <h3>Visualization 1 (Altair)</h3>
-                <p>Explanation of the visualization.</p>
+                <p>This stacked barplot shows the number of active speed restrictions across the 4 major MBTA lines at the beginning of each month, and the number of active speed restrictions at the end
+                    of each month. The purpose of this figure is to demonstrate how the number of speed restrictions at the start and end of the month is roughly equal in most cases, suggesting 
+                    that the MBTA struggles to address the problem with speed restrictions, as they are unable to significantly reduce the number of restrictions in a monthly period. Data from 2024
+                    suggests that the MBTA is starting to impose less speed restrictions. </p>
                 <div class="chart" id="chart1"></div>
                 <iframe src="monthly_restrictions_chart.html" width="100%" height="500px"></iframe>
             </div>
             <div class="visualization">
                 <h3>Visualization 2</h3>
-                <p>EThis boxplot visualizes the speed restrictions (measured in miles per hour) across the MBTA’s various lines from 2023 to 2025. The purpose of this graph is to illustrate the range and 
+                <p>This boxplot visualizes the speed restrictions (measured in miles per hour) across the MBTA’s various lines from 2023 to 2025. The purpose of this graph is to illustrate the range and 
                     distribution of these restrictions for each line, offering insights into how speed limitations impact different segments of the transit system. From the visualization, it is evident 
                     that while most of the speed restriction data falls within a consolidated range for each line, and although there are notable outliers; particularly on the Red, Orange, and Blue lines; 
                     where certain restrictions deviate significantly from the norm. These outliers can indicate instances where a specific track section experiences much more severe speed limitations 

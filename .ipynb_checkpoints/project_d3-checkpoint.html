@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scatter Plot - Train Speed Restrictions</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .tooltip {
+      position: absolute;
+      background-color: lightgrey;
+      padding: 5px;
+      border-radius: 5px;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    #vis.d3-embed {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #vis.d3-embed details,
+    #vis.d3-embed details summary {
+      position: relative;
+    }    
+  </style>
+</head>
+<body>
+
+  <div id="vis" class="d3-embed"></div>
+  <svg width="800" height="500"></svg>
+
+  <script>
+    const data = [
+    {"Year-Month": "2023-01", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
+    {"Year-Month": "2023-01", "Line": "Green Line", "Restriction_Speed_MPH": 7.75, "Restriction_Days_Active": 389.80},
+    {"Year-Month": "2023-01", "Line": "Orange Line", "Restriction_Speed_MPH": 19.21, "Restriction_Days_Active": 34.56},
+    {"Year-Month": "2023-01", "Line": "Red Line", "Restriction_Speed_MPH": 13.68, "Restriction_Days_Active": 102.71},
+    {"Year-Month": "2023-02", "Line": "Blue Line", "Restriction_Speed_MPH": 18.28, "Restriction_Days_Active": 5.026},
+    {"Year-Month": "2023-02", "Line": "Green Line", "Restriction_Speed_MPH": 7.44, "Restriction_Days_Active": 338.75},
+    {"Year-Month": "2023-02", "Line": "Orange Line", "Restriction_Speed_MPH": 18.7, "Restriction_Days_Active": 54.27},
+    {"Year-Month": "2023-02", "Line": "Red Line", "Restriction_Speed_MPH": 13, "Restriction_Days_Active": 90.63},
+    {"Year-Month": "2023-03", "Line": "Blue Line", "Restriction_Speed_MPH": 16.22, "Restriction_Days_Active": 11.05},
+    {"Year-Month": "2023-03", "Line": "Green Line", "Restriction_Speed_MPH": 11.10, "Restriction_Days_Active": 121.02},
+    {"Year-Month": "2023-03", "Line": "Orange Line", "Restriction_Speed_MPH": 17.039, "Restriction_Days_Active": 39.62},
+    {"Year-Month": "2023-03", "Line": "Red Line", "Restriction_Speed_MPH": 15.09, "Restriction_Days_Active": 53.79},
+    {"Year-Month": "2023-04", "Line": "Blue Line", "Restriction_Speed_MPH": 15.67, "Restriction_Days_Active": 19.97},
+    {"Year-Month": "2023-04", "Line": "Green Line", "Restriction_Speed_MPH": 11.31, "Restriction_Days_Active": 111.96},
+    {"Year-Month": "2023-04", "Line": "Orange Line", "Restriction_Speed_MPH": 19.79, "Restriction_Days_Active": 48.09},
+    {"Year-Month": "2023-04", "Line": "Red Line", "Restriction_Speed_MPH": 15.32, "Restriction_Days_Active": 68.98},
+    {"Year-Month": "2023-05", "Line": "Blue Line", "Restriction_Speed_MPH": 17.68, "Restriction_Days_Active": 42.94},
+    {"Year-Month": "2023-05", "Line": "Green Line", "Restriction_Speed_MPH": 11.36, "Restriction_Days_Active": 142.81},
+    {"Year-Month": "2023-05", "Line": "Orange Line", "Restriction_Speed_MPH": 20.41, "Restriction_Days_Active": 69.16},
+    {"Year-Month": "2023-05", "Line": "Red Line", "Restriction_Speed_MPH": 15.92, "Restriction_Days_Active": 90.65},
+    {"Year-Month": "2023-06", "Line": "Blue Line", "Restriction_Speed_MPH": 19.60, "Restriction_Days_Active": 69.67},
+    {"Year-Month": "2023-06", "Line": "Green Line", "Restriction_Speed_MPH": 11.18, "Restriction_Days_Active": 168.51},
+    {"Year-Month": "2023-06", "Line": "Orange Line", "Restriction_Speed_MPH": 18.96, "Restriction_Days_Active": 84.34},
+    {"Year-Month": "2023-06", "Line": "Red Line", "Restriction_Speed_MPH": 16.44, "Restriction_Days_Active": 107.61},
+    {"Year-Month": "2023-07", "Line": "Blue Line", "Restriction_Speed_MPH": 19.35, "Restriction_Days_Active": 92.61},
+    {"Year-Month": "2023-07", "Line": "Green Line", "Restriction_Speed_MPH": 10.89, "Restriction_Days_Active": 177.49},
+    {"Year-Month": "2023-07", "Line": "Orange Line", "Restriction_Speed_MPH": 18.50, "Restriction_Days_Active": 100.59},
+    {"Year-Month": "2023-07", "Line": "Red Line", "Restriction_Speed_MPH": 16.24, "Restriction_Days_Active": 129.20},
+    {"Year-Month": "2023-08", "Line": "Blue Line", "Restriction_Speed_MPH": 20.10, "Restriction_Days_Active": 111.31},
+    {"Year-Month": "2023-08", "Line": "Green Line", "Restriction_Speed_MPH": 11.56, "Restriction_Days_Active": 212.70},
+    {"Year-Month": "2023-08", "Line": "Orange Line", "Restriction_Speed_MPH": 18.31, "Restriction_Days_Active": 109.03},
+    {"Year-Month": "2023-08", "Line": "Red Line", "Restriction_Speed_MPH": 15.50, "Restriction_Days_Active": 136.71},
+    {"Year-Month": "2023-09", "Line": "Blue Line", "Restriction_Speed_MPH": 19.13, "Restriction_Days_Active": 132.37},
+    {"Year-Month": "2023-09", "Line": "Green Line", "Restriction_Speed_MPH": 11.09, "Restriction_Days_Active": 227.09},
+    {"Year-Month": "2023-09", "Line": "Orange Line", "Restriction_Speed_MPH": 19.06, "Restriction_Days_Active": 130.20},
+    {"Year-Month": "2023-09", "Line": "Red Line", "Restriction_Speed_MPH": 15.64, "Restriction_Days_Active": 152.15},
+    {"Year-Month": "2023-10", "Line": "Blue Line", "Restriction_Speed_MPH": 19.084, "Restriction_Days_Active": 161.12},
+    {"Year-Month": "2023-10", "Line": "Green Line", "Restriction_Speed_MPH": 11.35, "Restriction_Days_Active": 257.51},
+    {"Year-Month": "2023-10", "Line": "Orange Line", "Restriction_Speed_MPH": 19.71, "Restriction_Days_Active": 144.68},
+    {"Year-Month": "2023-10", "Line": "Red Line", "Restriction_Speed_MPH": 16.19, "Restriction_Days_Active": 182.84},
+    {"Year-Month": "2023-11", "Line": "Blue Line", "Restriction_Speed_MPH": 19.27, "Restriction_Days_Active": 192.82},
+    {"Year-Month": "2023-11", "Line": "Green Line", "Restriction_Speed_MPH": 11.37, "Restriction_Days_Active": 278.01},
+    {"Year-Month": "2023-11", "Line": "Orange Line", "Restriction_Speed_MPH": 18.96, "Restriction_Days_Active": 158.00},
+    {"Year-Month": "2023-11", "Line": "Red Line", "Restriction_Speed_MPH": 16.16, "Restriction_Days_Active": 204.68},
+    {"Year-Month": "2023-12", "Line": "Blue Line", "Restriction_Speed_MPH": 19.72, "Restriction_Days_Active": 214.34},
+    {"Year-Month": "2023-12", "Line": "Green Line", "Restriction_Speed_MPH": 11.33, "Restriction_Days_Active": 288.45},
+    {"Year-Month": "2023-12", "Line": "Orange Line", "Restriction_Speed_MPH": 19.20, "Restriction_Days_Active": 173.49},
+    {"Year-Month": "2023-12", "Line": "Red Line", "Restriction_Speed_MPH": 16.12, "Restriction_Days_Active": 220.22},
+    {"Year-Month": "2024-01", "Line": "Blue Line", "Restriction_Speed_MPH": 19.35, "Restriction_Days_Active": 235.60},
+    {"Year-Month": "2024-01", "Line": "Green Line", "Restriction_Speed_MPH": 11.25, "Restriction_Days_Active": 298.96},
+    {"Year-Month": "2024-01", "Line": "Orange Line", "Restriction_Speed_MPH": 18.95, "Restriction_Days_Active": 185.33},
+    {"Year-Month": "2024-01", "Line": "Red Line", "Restriction_Speed_MPH": 16.27, "Restriction_Days_Active": 236.094},
+    {"Year-Month": "2024-02", "Line": "Blue Line", "Restriction_Speed_MPH": 19.57, "Restriction_Days_Active": 247.88},
+    {"Year-Month": "2024-02", "Line": "Green Line", "Restriction_Speed_MPH": 11.15, "Restriction_Days_Active": 308.54},
+    {"Year-Month": "2024-02", "Line": "Orange Line", "Restriction_Speed_MPH": 19.32, "Restriction_Days_Active": 197.25},
+    {"Year-Month": "2024-02", "Line": "Red Line", "Restriction_Speed_MPH": 16.30, "Restriction_Days_Active": 251.02},
+    {"Year-Month": "2025-02", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
+    {"Year-Month": "2025-02", "Line": "Green Line", "Restriction_Speed_MPH": 3.0, "Restriction_Days_Active": 0.5},
+    {"Year-Month": "2025-02", "Line": "Orange Line", "Restriction_Speed_MPH": 13.75, "Restriction_Days_Active": 1.625},
+    {"Year-Month": "2025-02", "Line": "Red Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 2.75}
+    ];
+
+    const margin = { top: 30, right: 40, bottom: 60, left: 70 };
+    const width = 800 - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+
+    const svg = d3.select("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Create x and y scales
+    const x = d3.scaleLinear() 
+        .domain([d3.min(data, d => d.Restriction_Days_Active), d3.max(data, d => d.Restriction_Days_Active)])  // Linear domain based on Restriction_Days_Active
+        .nice()
+        .range([0, width]);
+
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.Restriction_Speed_MPH)])
+      .nice()
+      .range([height, 0]);
+
+    // Add x-axis
+    svg.append("g")
+      .attr("class", "x-axis")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .style("text-anchor", "middle")
+      .attr("transform", "rotate(45)");
+
+    // add y-axis
+    svg.append("g")
+      .attr("class", "y-axis")
+      .call(d3.axisLeft(y));
+
+    // tooltip setup
+    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+
+    svg.selectAll(".dot")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", "dot")
+        .attr("cx", d => x(d.Restriction_Days_Active)) // position x-axis
+        .attr("cy", d => y(d.Restriction_Speed_MPH)) // position y-axis
+        .attr("r", 5)
+        .attr("fill", d => {
+            const colorMap = {
+            "Blue Line": "blue",
+            "Green Line": "green",
+            "Orange Line": "orange",
+            "Red Line": "red"
+            };
+            return colorMap[d.Line];
+        })
+    .on("mouseover", function(event, d) {
+        tooltip.transition().duration(200).style("opacity", 0.9);
+        tooltip.html(`Line: ${d.Line}<br>Month: ${d['Year-Month']}<br>Speed: ${d.Restriction_Speed_MPH} MPH<br>Days Active: ${d.Restriction_Days_Active} Days`)
+        .style("left", (event.pageX + 5) + "px")
+        .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", function() {
+        tooltip.transition().duration(500).style("opacity", 0);
+    });
+
+    // chart title
+    svg.append("text")
+      .attr("x", width / 2)
+      .attr("y", -10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .text("Scatter Plot of Speed Restrictions vs Days of Restriction Active (2023-2025)");
+
+    // X-Axis Title
+    svg.append("text")
+        .attr("x", width / 2)           
+        .attr("y", height + margin.bottom - 10)  
+        .attr("text-anchor", "middle") 
+        .style("font-size", "14px") 
+        .text("Restriction Active (Avg. Days)");
+    
+    // Y-Axis Title
+    svg.append("text")
+        .attr("transform", "rotate(-90)")  
+        .attr("x", -height / 2)           
+        .attr("y", -margin.left + 20)     
+        .attr("text-anchor", "middle")    
+        .style("font-size", "14px") 
+        .text("Speed (MPH)");
+
+  </script>
+</body>
+</html>
