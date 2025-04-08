@@ -3,22 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Visualization Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>MBTA in Motion: A Study of Public Transit Efficiency</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <body>
         <header>
-            <h1>Data Visualization Project</h1>
+            <h1>MBTA in Motion: A Study of Public Transit Efficiency</h1>
         </header>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="#intro">Introduction</a></li>
+                <li><a href="#data">Data</a></li>
+                <li><a href="#viz1">Viz 1</a></li>
+                <li><a href="#viz2">Viz 2</a></li>
+                <li><a href="#viz3">Viz 3</a></li>
+                <li><a href="#viz4">Viz 4</a></li>
+                <li><a href="#viz5">Viz 5</a></li>
+                <li><a href="#summary">Summary</a></li>
+            </ul>
+        </nav>
         <main>
-            <h2>Project Introduction</h2>
-            <p>As students, we are keenly interested in exploring the ongoing service challenges facing the Massachusetts Bay Transportation Authority (MBTA), which serves as a vital link in Boston's public transportation system. 
-                The MBTA plays a crucial role, serving thousands of commuters each day. However, persistent issues such as delays, slow zones, and inconsistent ridership patterns have led to frustration and decreased satisfaction among passengers. 
-                Understanding the root causes of these problems is essential for improving the system's reliability and efficiency. In this project, we aim to analyze data on ridership trends, transit disruptions, 
-                speed restrictions, and the frequency of active speed restriction days to uncover patterns that contribute to service interruptions. Through graphical visualizations, we hope to answer the question:
-                How is the MBTA so slow? By identifying key areas of the system that require attention—whether related to infrastructure, scheduling, or operational factors—we aim to provide valuable insights. 
-                Our findings will help policymakers, transit planners, and riders, supporting efforts to improve the MBTA’s reliability and overall effectiveness for the benefit of Boston's commuting community.</p>
+            <section id="intro">
+                <h2>Project Introduction</h2>
+                <p>As students, we are keenly interested in exploring the ongoing service challenges facing the Massachusetts Bay Transportation Authority (MBTA), which serves as a vital link in Boston's public transportation system. 
+                    The MBTA plays a crucial role, serving thousands of commuters each day. However, persistent issues such as delays, slow zones, and inconsistent ridership patterns have led to frustration and decreased satisfaction among passengers. 
+                    Understanding the root causes of these problems is essential for improving the system's reliability and efficiency. In this project, we aim to analyze data on ridership trends, transit disruptions, 
+                    speed restrictions, and the frequency of active speed restriction days to uncover patterns that contribute to service interruptions. Through graphical visualizations, we hope to answer the question:
+                    How is the MBTA so slow? By identifying key areas of the system that require attention—whether related to infrastructure, scheduling, or operational factors—we aim to provide valuable insights. 
+                    Our findings will help policymakers, transit planners, and riders, supporting efforts to improve the MBTA’s reliability and overall effectiveness for the benefit of Boston's commuting community.</p>
+            </section>
             
             <h2>References</h2>
             <p>
@@ -26,19 +41,20 @@
                 <li><a href="https://www.jstor.org/stable/20053992">"Performance Measurement for Railway Transport: Stochastic Distance Functions with Inefficiency and Ineffectiveness Effects"</a></li>
             </p>
 
-            <h2>Data Overview</h2>
-            <p>We used several datasets from the MBTA’s Blue Book Open Data Portal. The datasets we used to make our visualizations were:
-                MBTA Monthly Ridership By Mode and Line and the MBTA Rapid Transit Speed Restrictions by Day. The MBTA Monthly Ridership By Mode and Line
-                dataset consists of over 4000 records containing the total and average daily ridership per month by day type (weekend or workday), transportation 
-                mode, and line. Our other dataset, the MBTA Rapid Transit Speed Restrictions by Day consisted of over 100,000 observations of daily speed restrictions from 2023 to 2025, which
-                we reduced by taking monthly averages of the speed restrictions to minimize the size of the data to around 100 observations. 
-                The attributes included information about the line where the speed restriction was active, the number of speed restrictions at the beginning and end of the month,
-                the speed limit of the restriction, the distance of the restriction, and the number of active restrictions per line. 
-
-            </p>
+            <section id="data">
+                <h2>Data Overview</h2>
+                <p>We used several datasets from the MBTA’s Blue Book Open Data Portal. The datasets we used to make our visualizations were:
+                    MBTA Monthly Ridership By Mode and Line and the MBTA Rapid Transit Speed Restrictions by Day. The MBTA Monthly Ridership By Mode and Line
+                    dataset consists of over 4000 records containing the total and average daily ridership per month by day type (weekend or workday), transportation 
+                    mode, and line. Our other dataset, the MBTA Rapid Transit Speed Restrictions by Day consisted of over 100,000 observations of daily speed restrictions from 2023 to 2025, which
+                    we reduced by taking monthly averages of the speed restrictions to minimize the size of the data to around 100 observations. 
+                    The attributes included information about the line where the speed restriction was active, the number of speed restrictions at the beginning and end of the month,
+                    the speed limit of the restriction, the distance of the restriction, and the number of active restrictions per line. 
+                </p>
+            </section>
             
             <h2>Data Visualizations</h2>
-            <div class="visualization">
+            <section class="visualization" id="viz1">
                 <h3>Visualization 1 (Altair)</h3>
                 <p>This stacked barplot shows the number of active speed restrictions across the 4 major MBTA lines at the beginning of each month, and the number of active speed restrictions at the end
                     of each month. The purpose of this figure is to demonstrate how the number of speed restrictions at the start and end of the month is roughly equal in most cases, suggesting 
@@ -46,8 +62,9 @@
                     suggests that the MBTA is starting to impose less speed restrictions. </p>
                 <div class="chart" id="chart1"></div>
                 <iframe src="monthly_restrictions_chart.html" width="100%" height="500px"></iframe>
-            </div>
-            <div class="visualization">
+            </section>
+
+            <section class="visualization" id="viz2">
                 <h3>Visualization 2</h3>
                 <p>This boxplot visualizes the speed restrictions (measured in miles per hour) across the MBTA’s various lines from 2023 to 2025. The purpose of this graph is to illustrate the range and 
                     distribution of these restrictions for each line, offering insights into how speed limitations impact different segments of the transit system. From the visualization, it is evident 
@@ -61,16 +78,18 @@
                     view of how speed restrictions vary across MBTA lines, highlighting both consistent trends and anomalies in their operational constraints.</p>
                 <div class="chart" id="chart2"></div>
                 <iframe src="speed_restrictions_boxplot.html" width="100%" height="600px"></iframe>
-            </div>
-            <div class="visualization">
-                <h3>Visualization 3 (Altair) </h3>
+            </section>
+            
+            <section class="visualization" id="viz3">
+                <h3>Visualization 3 </h3>
                 <p>This line plot illustrates ridership trends for each transit line and buses from August 2018 to December 2024. Click on a legend label to highlight a specific line. Ridership across all lines 
                     dropped sharply at the start of the COVID-19 pandemic in 2020 and has yet to return to pre-pandemic levels. Among all lines, the Green Line experienced the most volatility, with ridership plunging 
                     close to early pandemic levels again in 2024. </p>
                 <div class="chart" id="chart3"></div>
                 <iframe src="ridership_line_plot.html" width="100%" height="500px"></iframe>
-            </div>
-            <div class="visualization">
+            </section>
+            
+            <section class="visualization" id="viz4">
                 <h3>Visualization 4</h3>
                 <p>This bar graph shows the number of days with reported speed restrictions for various lines of the MBTA in 2025. The Green Line Trunk experienced the highest number of restricted days by far, with 77 days, 
                     indicating significant operational issues or ongoing maintenance. The Red Line – Mattapan also had a high number, with 45 days, followed by the Red Line – Braintree and Red Line – Ashmont, each with 
@@ -78,9 +97,10 @@
                     Overall, this suggests that certain sections of the Green and Red Lines faced more service disruptions and safety-related slowdowns than others in 2025.</p>
                 <div class="chart" id="chart4"></div>
                 <iframe src="bar_plot.html" width="100%" height="500px"></iframe>
-            </div>
-            <div class="visualization">
-                <h3>Visualization 5 (D3)</h3>
+            </section>
+            
+            <section class="visualization" id="viz5">
+                <h3>Visualization 5</h3>
                 <p>This scatter plot visualizes the relationship between MBTA speed restrictions (MPH) and the average duration (in days) that these restrictions have been in place, with each data point color-coded by line (Orange, Blue, Red, or Green). 
                     The graph reveals that each MBTA line follows a relatively constant trajectory in its restriction patterns, while also highlighting a broader trend over time. Early 2023 had lower speed restrictions compared to 2024, which saw an 
                     overall increase in both severity and duration, likely due to expanded track repair programs and safety audits following infrastructure concerns. In contrast, 2025 experienced significantly fewer and shorter-lived restrictions, suggesting 
@@ -88,15 +108,16 @@
                     with transit efficiency, adapting policies as infrastructure improvements progress.</p>
                 <div class="chart" id="chart5"></div>
                 <iframe src="project_d3.html" width="100%" height="500px"></iframe>
-            </div>
-            
-            <h2>Findings & Summary</h2>
-            <p>Our analysis revealed that the Green Line experiences the most speed restrictions and operates at the slowest pace compared to other MBTA lines. Additionally, it has the most turbulent ridership patterns, 
-                likely due to these persistent delays and operational challenges. Notably, these speed restrictions are active on average for longer periods than on any other line, exacerbating delays and inefficiencies. 
-                This was our primary takeaway from the visualizations we created, but a more comprehensive analysis could uncover deeper insights, such as identifying specific causes for these restrictions or patterns in ridership behavior. 
-                These findings could assist the MBTA in pinpointing critical areas for improvement—ranging from addressing speed restrictions to optimizing service reliability. Ultimately, implementing these changes could enhance the overall 
-                rider experience and boost public transit usage in Boston.</p>
-        
+            </section>
+
+            <section id="summary">
+                <h2>Findings & Summary</h2>
+                <p>Our analysis revealed that the Green Line experiences the most speed restrictions and operates at the slowest pace compared to other MBTA lines. Additionally, it has the most turbulent ridership patterns, 
+                    likely due to these persistent delays and operational challenges. Notably, these speed restrictions are active on average for longer periods than on any other line, exacerbating delays and inefficiencies. 
+                    This was our primary takeaway from the visualizations we created, but a more comprehensive analysis could uncover deeper insights, such as identifying specific causes for these restrictions or patterns in ridership behavior. 
+                    These findings could assist the MBTA in pinpointing critical areas for improvement—ranging from addressing speed restrictions to optimizing service reliability. Ultimately, implementing these changes could enhance the overall 
+                    rider experience and boost public transit usage in Boston.</p>
+            </section>
         </main>
 </body>
 </html>
