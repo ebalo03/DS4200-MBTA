@@ -180,23 +180,23 @@ lines.forEach(lineName => {
 });
 
 
-  const annotationText = [
+const annotationText = [
     "In 2023, the policy context for the MBTA lines focused on infrastructure improvements, service reliability, and accessibility.",
     "Specifically, the MBTA implemented a Track Improvement Program to address speed restrictions and upgrade tracks.",
     "Simultaneously, the MBTA worked on enhancing service reliability by implementing new service delivery ",
     "policies and methods for measuring success, including the Enhanced Trip Time (ETT) methodology.".
     "Then, in 2024, all of these policy peaked with speed restrictions & infrastructure, then relaxing in early 2025." 
-    ];
+];
   
-  const annotation = svg.append("text")
+const annotation = svg.append("text")
     .attr("x", width / 2)
     .attr("y", height - 10)
     .attr("text-anchor", "middle")
     .attr("fill", "#333")
     .style("font-size", "12px");
   
-  annotationText.forEach((line, i) => {
-  annotation.append("tspan")
+annotationText.forEach((line, i) => {
+annotation.append("tspan")
     .attr("x", width / 2)
     .attr("dy", i === 0 ? "0" : "1.2em")
     .text(line);
