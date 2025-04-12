@@ -144,7 +144,7 @@
       .text("Monthly Train Speed Restrictions by Line");
   
   const line = d3.line()
-      .x(d => x(d.date))
+      .x(d => x(d.Restriction_Days_Active))
       .y(d => y(d.Restriction_Speed_MPH));
   
   const tooltip = d3.select("body").append("div")
@@ -164,7 +164,7 @@
           .data(lineData)
           .enter()
           .append("circle")
-          .attr("cx", d => x(d.date))
+          .attr("cx", d => x(d.Restriction_Days_Active))
           .attr("cy", d => y(d.Restriction_Speed_MPH))
           .attr("r", 4)
           .attr("fill", color(lineName))
@@ -185,7 +185,7 @@
         .attr("text-anchor", "start")
         .style("font-size", "12px")
         .style("fill", "#333")
-        .text("Policy Context: In 2013, tightening of policy, then 2024, a peak in spreed restrictions, and a relaxation in 2025.");
+        .text("Policy Context: In 2023, tightening of policy, then 2024, a peak in spreed restrictions, and a relaxation in 2025.");
   </script>
 
 </body>
