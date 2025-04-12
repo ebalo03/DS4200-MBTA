@@ -55,7 +55,7 @@
             
             <h2>Data Visualizations</h2>
             <section class="visualization" id="viz1">
-                <h3>Visualization 1</h3>
+                <h3>Active Speed Restrictions for the 4 Major MBTA Lines</h3>
                 <p>This stacked barplot shows the number of active speed restrictions across the 4 major MBTA lines at the beginning of each month, and the number of active speed restrictions at the end
                     of each month. The purpose of this figure is to demonstrate how the number of speed restrictions at the start and end of the month is roughly equal in most cases, suggesting 
                     that the MBTA struggles to address the problem with speed restrictions, as they are unable to significantly reduce the number of restrictions in a monthly period. Data from 2024
@@ -65,12 +65,13 @@
             </section>
 
             <section class="visualization" id="viz2">
-                <h3>Visualization 2</h3>
+                <h3>Speed Restrictions Per Line, on the Granular!</h3>
                 <p>This boxplot visualizes the speed restrictions (measured in miles per hour) across the MBTA’s various lines from 2023 to 2025. The purpose of this graph is to illustrate the range and 
-                    distribution of these restrictions for each line, offering insights into how speed limitations impact different segments of the transit system. From the visualization, it is evident 
-                    that while most of the speed restriction data falls within a consolidated range for each line, and although there are notable outliers; particularly on the Red, Orange, and Blue lines; 
-                    where certain restrictions deviate significantly from the norm. These outliers can indicate instances where a specific track section experiences much more severe speed limitations 
-                    compared to the overall trend for that line. The Green Line exhibits the lowest median speed restriction, making it the slowest among the MBTA lines. This aligns with its status as a 
+                    distribution of these restrictions for each line, offering insights into how speed limitations impact different segments of the transit system. If you hover over the boxplot, the user can
+                    see the IQR range of each line, so please feel free to do so yourself! From the visualization, it is evident that while most of the speed restriction data falls within a consolidated range
+                    for each line, and although there are notable outliers; particularly on the Red, Orange, and Blue lines; where certain restrictions deviate significantly from the norm. 
+                    These outliers can indicate instances where a specific track section experiences much more severe speed limitations compared to the overall trend for that line. The Green Line
+                     exhibits the lowest median speed restriction, making it the slowest among the MBTA lines. This aligns with its status as a 
                     light rail system, which often operates at reduced speeds due to factors such as track design, at-grade crossings, and vehicle capabilities. In contrast, the Orange Line tends to have 
                     higher speed restrictions, suggesting that it generally operates at faster speeds than the other lines. This could be due to factors such as newer track infrastructure or fewer bottlenecks 
                     that necessitate slower operation. The Red and Blue Lines appear relatively similar in terms of their speed restriction distributions, with only a slight variation in their median values. 
@@ -81,7 +82,7 @@
             </section>
             
             <section class="visualization" id="viz3">
-                <h3>Visualization 3 </h3>
+                <h3>Ridership Trends for each of the MBTA Lines</h3>
                 <p>This line plot illustrates ridership trends for each transit line and buses from August 2018 to December 2024. Click on a legend label to highlight a specific line. Ridership across all lines 
                     dropped sharply at the start of the COVID-19 pandemic in 2020 and has yet to return to pre-pandemic levels. Among all lines, the Green Line experienced the most volatility, with ridership plunging 
                     close to early pandemic levels again in 2024. </p>
@@ -90,7 +91,7 @@
             </section>
             
             <section class="visualization" id="viz4">
-                <h3>Visualization 4</h3>
+                <h3>2025 reported Days with Speed Restrictions</h3>
                 <p>This bar graph shows the number of days with reported speed restrictions for various lines of the MBTA in 2025. The Green Line Trunk experienced the highest number of restricted days by far, with 77 days, 
                     indicating significant operational issues or ongoing maintenance. The Red Line – Mattapan also had a high number, with 45 days, followed by the Red Line – Braintree and Red Line – Ashmont, each with 
                     around 24–26 days. The Orange Line had 13 days, while the Green Line – C saw 7 days of restrictions. In contrast, the Green Line – B and Blue Line had the fewest restrictions, with just 1 day each. 
@@ -100,8 +101,8 @@
             </section>
             
             <section class="visualization" id="viz5">
-                <h3>Visualization 5</h3>
-                <p>This scatter plot visualizes the relationship between MBTA speed restrictions (MPH) and the average duration (in days) that these restrictions have been in place, with each data point color-coded by line (Orange, Blue, Red, or Green). 
+                <h3>Average Duration of Restrictions per Month</h3>
+                <p>This D3 line plot visualizes the relationship between MBTA speed restrictions (MPH) and the average duration (in days) that these restrictions have been in place, with each data point color-coded by line (Orange, Blue, Red, or Green). 
                     The graph reveals that each MBTA line follows a relatively constant trajectory in its restriction patterns, while also highlighting a broader trend over time. Early 2023 had lower speed restrictions compared to 2024, which saw an 
                     overall increase in both severity and duration, likely due to expanded track repair programs and safety audits following infrastructure concerns. In contrast, 2025 experienced significantly fewer and shorter-lived restrictions, suggesting 
                     that major capital improvement projects; such as rail replacements and station upgrades, had been completed, allowing for more normal train operations. This overall trend reflects the MBTA’s evolving approach to balancing safety measures 
