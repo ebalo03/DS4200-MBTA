@@ -180,7 +180,22 @@
               tooltip.transition().duration(500).style("opacity", 0);
           });
   });
-  
+
+  svg.append("text")
+      .attr("x", width / 2)           
+      .attr("y", height + margin.bottom - 10)  
+      .attr("text-anchor", "middle") 
+      .style("font-size", "14px") 
+      .text("Restriction Active (Avg. Days)");
+    
+    svg.append("text")
+        .attr("transform", "rotate(-90)")  
+        .attr("x", -height / 2)           
+        .attr("y", -margin.left + 20)     
+        .attr("text-anchor", "middle")    
+        .style("font-size", "14px") 
+        .text("Speed (MPH)");
+    
   svg.append("text")
         .attr("x", 0)
         .attr("y", height + margin.bottom - 20)
