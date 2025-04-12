@@ -35,69 +35,68 @@
   <svg width="900" height="600"></svg>
   
   <script>
-  
   const data = [
-    {"Year-Month": "2023-01", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
-    {"Year-Month": "2023-01", "Line": "Green Line", "Restriction_Speed_MPH": 7.75, "Restriction_Days_Active": 389.80},
-    {"Year-Month": "2023-01", "Line": "Orange Line", "Restriction_Speed_MPH": 19.21, "Restriction_Days_Active": 34.56},
-    {"Year-Month": "2023-01", "Line": "Red Line", "Restriction_Speed_MPH": 13.68, "Restriction_Days_Active": 102.71},
-    {"Year-Month": "2023-02", "Line": "Blue Line", "Restriction_Speed_MPH": 18.28, "Restriction_Days_Active": 5.026},
-    {"Year-Month": "2023-02", "Line": "Green Line", "Restriction_Speed_MPH": 7.44, "Restriction_Days_Active": 338.75},
-    {"Year-Month": "2023-02", "Line": "Orange Line", "Restriction_Speed_MPH": 18.7, "Restriction_Days_Active": 54.27},
-    {"Year-Month": "2023-02", "Line": "Red Line", "Restriction_Speed_MPH": 13, "Restriction_Days_Active": 90.63},
-    {"Year-Month": "2023-03", "Line": "Blue Line", "Restriction_Speed_MPH": 16.22, "Restriction_Days_Active": 11.05},
-    {"Year-Month": "2023-03", "Line": "Green Line", "Restriction_Speed_MPH": 11.10, "Restriction_Days_Active": 121.02},
-    {"Year-Month": "2023-03", "Line": "Orange Line", "Restriction_Speed_MPH": 17.039, "Restriction_Days_Active": 39.62},
-    {"Year-Month": "2023-03", "Line": "Red Line", "Restriction_Speed_MPH": 15.09, "Restriction_Days_Active": 53.79},
-    {"Year-Month": "2023-04", "Line": "Blue Line", "Restriction_Speed_MPH": 15.67, "Restriction_Days_Active": 19.97},
-    {"Year-Month": "2023-04", "Line": "Green Line", "Restriction_Speed_MPH": 11.31, "Restriction_Days_Active": 111.96},
-    {"Year-Month": "2023-04", "Line": "Orange Line", "Restriction_Speed_MPH": 19.79, "Restriction_Days_Active": 48.09},
-    {"Year-Month": "2023-04", "Line": "Red Line", "Restriction_Speed_MPH": 15.32, "Restriction_Days_Active": 68.98},
-    {"Year-Month": "2023-05", "Line": "Blue Line", "Restriction_Speed_MPH": 17.68, "Restriction_Days_Active": 42.94},
-    {"Year-Month": "2023-05", "Line": "Green Line", "Restriction_Speed_MPH": 11.36, "Restriction_Days_Active": 142.81},
-    {"Year-Month": "2023-05", "Line": "Orange Line", "Restriction_Speed_MPH": 20.41, "Restriction_Days_Active": 69.16},
-    {"Year-Month": "2023-05", "Line": "Red Line", "Restriction_Speed_MPH": 15.92, "Restriction_Days_Active": 90.65},
-    {"Year-Month": "2023-06", "Line": "Blue Line", "Restriction_Speed_MPH": 19.60, "Restriction_Days_Active": 69.67},
-    {"Year-Month": "2023-06", "Line": "Green Line", "Restriction_Speed_MPH": 11.18, "Restriction_Days_Active": 168.51},
-    {"Year-Month": "2023-06", "Line": "Orange Line", "Restriction_Speed_MPH": 18.96, "Restriction_Days_Active": 84.34},
-    {"Year-Month": "2023-06", "Line": "Red Line", "Restriction_Speed_MPH": 16.44, "Restriction_Days_Active": 107.61},
-    {"Year-Month": "2023-07", "Line": "Blue Line", "Restriction_Speed_MPH": 19.35, "Restriction_Days_Active": 92.61},
-    {"Year-Month": "2023-07", "Line": "Green Line", "Restriction_Speed_MPH": 10.89, "Restriction_Days_Active": 177.49},
-    {"Year-Month": "2023-07", "Line": "Orange Line", "Restriction_Speed_MPH": 18.50, "Restriction_Days_Active": 100.59},
-    {"Year-Month": "2023-07", "Line": "Red Line", "Restriction_Speed_MPH": 16.24, "Restriction_Days_Active": 129.20},
-    {"Year-Month": "2023-08", "Line": "Blue Line", "Restriction_Speed_MPH": 20.10, "Restriction_Days_Active": 111.31},
-    {"Year-Month": "2023-08", "Line": "Green Line", "Restriction_Speed_MPH": 11.56, "Restriction_Days_Active": 212.70},
-    {"Year-Month": "2023-08", "Line": "Orange Line", "Restriction_Speed_MPH": 18.31, "Restriction_Days_Active": 109.03},
-    {"Year-Month": "2023-08", "Line": "Red Line", "Restriction_Speed_MPH": 15.50, "Restriction_Days_Active": 136.71},
-    {"Year-Month": "2023-09", "Line": "Blue Line", "Restriction_Speed_MPH": 19.13, "Restriction_Days_Active": 132.37},
-    {"Year-Month": "2023-09", "Line": "Green Line", "Restriction_Speed_MPH": 11.09, "Restriction_Days_Active": 227.09},
-    {"Year-Month": "2023-09", "Line": "Orange Line", "Restriction_Speed_MPH": 19.06, "Restriction_Days_Active": 130.20},
-    {"Year-Month": "2023-09", "Line": "Red Line", "Restriction_Speed_MPH": 15.64, "Restriction_Days_Active": 152.15},
-    {"Year-Month": "2023-10", "Line": "Blue Line", "Restriction_Speed_MPH": 19.084, "Restriction_Days_Active": 161.12},
-    {"Year-Month": "2023-10", "Line": "Green Line", "Restriction_Speed_MPH": 11.35, "Restriction_Days_Active": 257.51},
-    {"Year-Month": "2023-10", "Line": "Orange Line", "Restriction_Speed_MPH": 19.71, "Restriction_Days_Active": 144.68},
-    {"Year-Month": "2023-10", "Line": "Red Line", "Restriction_Speed_MPH": 16.19, "Restriction_Days_Active": 182.84},
-    {"Year-Month": "2023-11", "Line": "Blue Line", "Restriction_Speed_MPH": 19.27, "Restriction_Days_Active": 192.82},
-    {"Year-Month": "2023-11", "Line": "Green Line", "Restriction_Speed_MPH": 11.37, "Restriction_Days_Active": 278.01},
-    {"Year-Month": "2023-11", "Line": "Orange Line", "Restriction_Speed_MPH": 18.96, "Restriction_Days_Active": 158.00},
-    {"Year-Month": "2023-11", "Line": "Red Line", "Restriction_Speed_MPH": 16.16, "Restriction_Days_Active": 204.68},
-    {"Year-Month": "2023-12", "Line": "Blue Line", "Restriction_Speed_MPH": 19.72, "Restriction_Days_Active": 214.34},
-    {"Year-Month": "2023-12", "Line": "Green Line", "Restriction_Speed_MPH": 11.33, "Restriction_Days_Active": 288.45},
-    {"Year-Month": "2023-12", "Line": "Orange Line", "Restriction_Speed_MPH": 19.20, "Restriction_Days_Active": 173.49},
-    {"Year-Month": "2023-12", "Line": "Red Line", "Restriction_Speed_MPH": 16.12, "Restriction_Days_Active": 220.22},
-    {"Year-Month": "2024-01", "Line": "Blue Line", "Restriction_Speed_MPH": 19.35, "Restriction_Days_Active": 235.60},
-    {"Year-Month": "2024-01", "Line": "Green Line", "Restriction_Speed_MPH": 11.25, "Restriction_Days_Active": 298.96},
-    {"Year-Month": "2024-01", "Line": "Orange Line", "Restriction_Speed_MPH": 18.95, "Restriction_Days_Active": 185.33},
-    {"Year-Month": "2024-01", "Line": "Red Line", "Restriction_Speed_MPH": 16.27, "Restriction_Days_Active": 236.094},
-    {"Year-Month": "2024-02", "Line": "Blue Line", "Restriction_Speed_MPH": 19.57, "Restriction_Days_Active": 247.88},
-    {"Year-Month": "2024-02", "Line": "Green Line", "Restriction_Speed_MPH": 11.15, "Restriction_Days_Active": 308.54},
-    {"Year-Month": "2024-02", "Line": "Orange Line", "Restriction_Speed_MPH": 19.32, "Restriction_Days_Active": 197.25},
-    {"Year-Month": "2024-02", "Line": "Red Line", "Restriction_Speed_MPH": 16.30, "Restriction_Days_Active": 251.02},
-    {"Year-Month": "2025-02", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
-    {"Year-Month": "2025-02", "Line": "Green Line", "Restriction_Speed_MPH": 3.0, "Restriction_Days_Active": 0.5},
-    {"Year-Month": "2025-02", "Line": "Orange Line", "Restriction_Speed_MPH": 13.75, "Restriction_Days_Active": 1.625},
-    {"Year-Month": "2025-02", "Line": "Red Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 2.75}
-  ];
+      {"Year-Month": "2023-01", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
+      {"Year-Month": "2023-01", "Line": "Green Line", "Restriction_Speed_MPH": 7.75, "Restriction_Days_Active": 389.80},
+      {"Year-Month": "2023-01", "Line": "Orange Line", "Restriction_Speed_MPH": 19.21, "Restriction_Days_Active": 34.56},
+      {"Year-Month": "2023-01", "Line": "Red Line", "Restriction_Speed_MPH": 13.68, "Restriction_Days_Active": 102.71},
+      {"Year-Month": "2023-02", "Line": "Blue Line", "Restriction_Speed_MPH": 18.28, "Restriction_Days_Active": 5.026},
+      {"Year-Month": "2023-02", "Line": "Green Line", "Restriction_Speed_MPH": 7.44, "Restriction_Days_Active": 338.75},
+      {"Year-Month": "2023-02", "Line": "Orange Line", "Restriction_Speed_MPH": 18.7, "Restriction_Days_Active": 54.27},
+      {"Year-Month": "2023-02", "Line": "Red Line", "Restriction_Speed_MPH": 13, "Restriction_Days_Active": 90.63},
+      {"Year-Month": "2023-03", "Line": "Blue Line", "Restriction_Speed_MPH": 16.22, "Restriction_Days_Active": 11.05},
+      {"Year-Month": "2023-03", "Line": "Green Line", "Restriction_Speed_MPH": 11.10, "Restriction_Days_Active": 121.02},
+      {"Year-Month": "2023-03", "Line": "Orange Line", "Restriction_Speed_MPH": 17.039, "Restriction_Days_Active": 39.62},
+      {"Year-Month": "2023-03", "Line": "Red Line", "Restriction_Speed_MPH": 15.09, "Restriction_Days_Active": 53.79},
+      {"Year-Month": "2023-04", "Line": "Blue Line", "Restriction_Speed_MPH": 15.67, "Restriction_Days_Active": 19.97},
+      {"Year-Month": "2023-04", "Line": "Green Line", "Restriction_Speed_MPH": 11.31, "Restriction_Days_Active": 111.96},
+      {"Year-Month": "2023-04", "Line": "Orange Line", "Restriction_Speed_MPH": 19.79, "Restriction_Days_Active": 48.09},
+      {"Year-Month": "2023-04", "Line": "Red Line", "Restriction_Speed_MPH": 15.32, "Restriction_Days_Active": 68.98},
+      {"Year-Month": "2023-05", "Line": "Blue Line", "Restriction_Speed_MPH": 17.68, "Restriction_Days_Active": 42.94},
+      {"Year-Month": "2023-05", "Line": "Green Line", "Restriction_Speed_MPH": 11.36, "Restriction_Days_Active": 142.81},
+      {"Year-Month": "2023-05", "Line": "Orange Line", "Restriction_Speed_MPH": 20.41, "Restriction_Days_Active": 69.16},
+      {"Year-Month": "2023-05", "Line": "Red Line", "Restriction_Speed_MPH": 15.92, "Restriction_Days_Active": 90.65},
+      {"Year-Month": "2023-06", "Line": "Blue Line", "Restriction_Speed_MPH": 19.60, "Restriction_Days_Active": 69.67},
+      {"Year-Month": "2023-06", "Line": "Green Line", "Restriction_Speed_MPH": 11.18, "Restriction_Days_Active": 168.51},
+      {"Year-Month": "2023-06", "Line": "Orange Line", "Restriction_Speed_MPH": 18.96, "Restriction_Days_Active": 84.34},
+      {"Year-Month": "2023-06", "Line": "Red Line", "Restriction_Speed_MPH": 16.44, "Restriction_Days_Active": 107.61},
+      {"Year-Month": "2023-07", "Line": "Blue Line", "Restriction_Speed_MPH": 19.35, "Restriction_Days_Active": 92.61},
+      {"Year-Month": "2023-07", "Line": "Green Line", "Restriction_Speed_MPH": 10.89, "Restriction_Days_Active": 177.49},
+      {"Year-Month": "2023-07", "Line": "Orange Line", "Restriction_Speed_MPH": 18.50, "Restriction_Days_Active": 100.59},
+      {"Year-Month": "2023-07", "Line": "Red Line", "Restriction_Speed_MPH": 16.24, "Restriction_Days_Active": 129.20},
+      {"Year-Month": "2023-08", "Line": "Blue Line", "Restriction_Speed_MPH": 20.10, "Restriction_Days_Active": 111.31},
+      {"Year-Month": "2023-08", "Line": "Green Line", "Restriction_Speed_MPH": 11.56, "Restriction_Days_Active": 212.70},
+      {"Year-Month": "2023-08", "Line": "Orange Line", "Restriction_Speed_MPH": 18.31, "Restriction_Days_Active": 109.03},
+      {"Year-Month": "2023-08", "Line": "Red Line", "Restriction_Speed_MPH": 15.50, "Restriction_Days_Active": 136.71},
+      {"Year-Month": "2023-09", "Line": "Blue Line", "Restriction_Speed_MPH": 19.13, "Restriction_Days_Active": 132.37},
+      {"Year-Month": "2023-09", "Line": "Green Line", "Restriction_Speed_MPH": 11.09, "Restriction_Days_Active": 227.09},
+      {"Year-Month": "2023-09", "Line": "Orange Line", "Restriction_Speed_MPH": 19.06, "Restriction_Days_Active": 130.20},
+      {"Year-Month": "2023-09", "Line": "Red Line", "Restriction_Speed_MPH": 15.64, "Restriction_Days_Active": 152.15},
+      {"Year-Month": "2023-10", "Line": "Blue Line", "Restriction_Speed_MPH": 19.084, "Restriction_Days_Active": 161.12},
+      {"Year-Month": "2023-10", "Line": "Green Line", "Restriction_Speed_MPH": 11.35, "Restriction_Days_Active": 257.51},
+      {"Year-Month": "2023-10", "Line": "Orange Line", "Restriction_Speed_MPH": 19.71, "Restriction_Days_Active": 144.68},
+      {"Year-Month": "2023-10", "Line": "Red Line", "Restriction_Speed_MPH": 16.19, "Restriction_Days_Active": 182.84},
+      {"Year-Month": "2023-11", "Line": "Blue Line", "Restriction_Speed_MPH": 19.27, "Restriction_Days_Active": 192.82},
+      {"Year-Month": "2023-11", "Line": "Green Line", "Restriction_Speed_MPH": 11.37, "Restriction_Days_Active": 278.01},
+      {"Year-Month": "2023-11", "Line": "Orange Line", "Restriction_Speed_MPH": 18.96, "Restriction_Days_Active": 158.00},
+      {"Year-Month": "2023-11", "Line": "Red Line", "Restriction_Speed_MPH": 16.16, "Restriction_Days_Active": 204.68},
+      {"Year-Month": "2023-12", "Line": "Blue Line", "Restriction_Speed_MPH": 19.72, "Restriction_Days_Active": 214.34},
+      {"Year-Month": "2023-12", "Line": "Green Line", "Restriction_Speed_MPH": 11.33, "Restriction_Days_Active": 288.45},
+      {"Year-Month": "2023-12", "Line": "Orange Line", "Restriction_Speed_MPH": 19.20, "Restriction_Days_Active": 173.49},
+      {"Year-Month": "2023-12", "Line": "Red Line", "Restriction_Speed_MPH": 16.12, "Restriction_Days_Active": 220.22},
+      {"Year-Month": "2024-01", "Line": "Blue Line", "Restriction_Speed_MPH": 19.35, "Restriction_Days_Active": 235.60},
+      {"Year-Month": "2024-01", "Line": "Green Line", "Restriction_Speed_MPH": 11.25, "Restriction_Days_Active": 298.96},
+      {"Year-Month": "2024-01", "Line": "Orange Line", "Restriction_Speed_MPH": 18.95, "Restriction_Days_Active": 185.33},
+      {"Year-Month": "2024-01", "Line": "Red Line", "Restriction_Speed_MPH": 16.27, "Restriction_Days_Active": 236.094},
+      {"Year-Month": "2024-02", "Line": "Blue Line", "Restriction_Speed_MPH": 19.57, "Restriction_Days_Active": 247.88},
+      {"Year-Month": "2024-02", "Line": "Green Line", "Restriction_Speed_MPH": 11.15, "Restriction_Days_Active": 308.54},
+      {"Year-Month": "2024-02", "Line": "Orange Line", "Restriction_Speed_MPH": 19.32, "Restriction_Days_Active": 197.25},
+      {"Year-Month": "2024-02", "Line": "Red Line", "Restriction_Speed_MPH": 16.30, "Restriction_Days_Active": 251.02},
+      {"Year-Month": "2025-02", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
+      {"Year-Month": "2025-02", "Line": "Green Line", "Restriction_Speed_MPH": 3.0, "Restriction_Days_Active": 0.5},
+      {"Year-Month": "2025-02", "Line": "Orange Line", "Restriction_Speed_MPH": 13.75, "Restriction_Days_Active": 1.625},
+      {"Year-Month": "2025-02", "Line": "Red Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 2.75}
+      ];
   
   const margin = { top: 50, right: 100, bottom: 80, left: 70 },
         width = 900 - margin.left - margin.right,
@@ -180,14 +179,13 @@
   });
   
   svg.append("text")
-      .attr("x", 0)
-      .attr("y", height + margin.bottom - 20)
-      .attr("text-anchor", "start")
-      .style("font-size", "12px")
-      .style("fill", "#333")
-      .text("Policy Context: In 2013, tightening of policy, then 2024, a peak in spreed restrictions, and a relaxation in 2025.);
-    
-  
+        .attr("x", 0)
+        .attr("y", height + margin.bottom - 20)
+        .attr("text-anchor", "start")
+        .style("font-size", "12px")
+        .style("fill", "#333")
+        .text("Policy Context: In 2013, tightening of policy, then 2024, a peak in spreed restrictions, and a relaxation in 2025.");
   </script>
+
 </body>
 </html>
