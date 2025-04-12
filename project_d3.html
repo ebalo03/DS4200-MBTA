@@ -118,7 +118,7 @@
       .range(d3.schemeCategory10);
   
   const x = d3.scaleTime()
-      .domain(d3.extent(data, d => d.date))
+      .domain(d3.extent(data, d => d.Restriction_Days_Active))
       .range([0, width]);
   
   const y = d3.scaleLinear()
@@ -126,11 +126,12 @@
       .range([height, 0]);
   
   svg.append("g")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x).ticks(12).tickFormat(d3.timeFormat("%b %Y")))
+      .attr("class", "x-axis")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x))
       .selectAll("text")
-      .attr("transform", "rotate(-40)")
-      .style("text-anchor", "end");
+      .style("text-anchor", "middle")
+      .attr("transform", "rotate(45)");
   
   svg.append("g")
       .call(d3.axisLeft(y));
