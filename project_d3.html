@@ -2,40 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Line Plot - Train Speed Restrictions</title>
+  <title>Train Speed Restrictions Over Time</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
+    body {
+      font-family: sans-serif;
+    }
     .tooltip {
       position: absolute;
-      background-color: lightgrey;
-      padding: 5px;
-      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 6px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
       pointer-events: none;
       opacity: 0;
+      font-size: 0.85rem;
+    }
+    .line {
+      fill: none;
+      stroke-width: 2px;
+    }
+    .legend {
       font-size: 12px;
-    }
-    
-    #vis.d3-embed {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
-
-    #vis.d3-embed details,
-    #vis.d3-embed details summary {
-      position: relative;
     }
   </style>
 </head>
 <body>
+  <h2>Train Line Speed Restrictions (Jan 2023 - Feb 2025)</h2>
+  <svg width="900" height="550"></svg>
+  <div class="tooltip"></div>
 
-<div id="vis" class="d3-embed"></div>
-<svg width="900" height="600"></svg>
+  <script>
+    const svg = d3.select("svg"),
+          margin = { top: 50, right: 100, bottom: 50, left: 70 },
+          width = +svg.attr("width") - margin.left - margin.right,
+          height = +svg.attr("height") - margin.top - margin.bottom;
 
-<script>
-  const data = [
+    const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    const parseTime = d3.timeParse("%Y-%m");
+
+    const data = [
     {"Year-Month": "2023-01", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
     {"Year-Month": "2023-01", "Line": "Green Line", "Restriction_Speed_MPH": 7.75, "Restriction_Days_Active": 389.80},
     {"Year-Month": "2023-01", "Line": "Orange Line", "Restriction_Speed_MPH": 19.21, "Restriction_Days_Active": 34.56},
@@ -97,94 +104,135 @@
     {"Year-Month": "2025-02", "Line": "Orange Line", "Restriction_Speed_MPH": 13.75, "Restriction_Days_Active": 1.625},
     {"Year-Month": "2025-02", "Line": "Red Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 2.75}
     ];
+    
+    data.forEach(d => {
+      d.date = parseTime(d["Year-Month"]);
+      d.Restriction_Speed_MPH = +d.Restriction_Speed_MPH;
+    });
 
-const margin = { top: 50, right: 100, bottom: 80, left: 70 },
-      width = 900 - margin.left - margin.right,
-      height = 600 - margin.top - margin.bottom;
+    const lines = Array.from(new Set(data.map(d => d.Line)));
 
-const svg = d3.select("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    const color = d3.scaleOrdinal()
+      .domain(lines)
+      .range(["#1f77b4", "#2ca02c", "#ff7f0e", "#d62728"]);
 
-const parseDate = d3.timeParse("%Y-%m");
-data.forEach(d => d.date = parseDate(d["Year-Month"]));
+    const line = d3.line()
+      .x(d => x(d.date))
+      .y(d => y(d.Restriction_Speed_MPH));
 
-const lines = Array.from(new Set(data.map(d => d.Line)));
+    const grouped = d3.groups(data, d => d.Line);
 
-const color = d3.scaleOrdinal()
-    .domain(lines)
-    .range(d3.schemeCategory10);
+    const x = d3.scaleTime()
+      .domain(d3.extent(data, d => d.date))
+      .range([0, width]);
 
-const x = d3.scaleTime()
-    .domain(d3.extent(data, d => d.date))
-    .range([0, width]);
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.Restriction_Speed_MPH)]).nice()
+      .range([height, 0]);
 
-const y = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.Restriction_Speed_MPH)])
-    .range([height, 0]);
+    // Axes
+    g.append("g")
+      .attr("transform", `translate(0,${height})`)
+      .call(d3.axisBottom(x).ticks(12).tickFormat(d3.timeFormat("%b %y")))
+      .selectAll("text")
+      .attr("transform", "rotate(45)")
+      .style("text-anchor", "start");
 
-svg.append("g")
-    .attr("transform", `translate(0, ${height})`)
-    .call(d3.axisBottom(x).ticks(12).tickFormat(d3.timeFormat("%b %Y")))
-    .selectAll("text")
-    .attr("transform", "rotate(-40)")
-    .style("text-anchor", "end");
+    g.append("g")
+      .call(d3.axisLeft(y));
 
-svg.append("g")
-    .call(d3.axisLeft(y));
+    g.append("text")
+      .attr("x", -height / 2)
+      .attr("y", -45)
+      .attr("transform", "rotate(-90)")
+      .attr("text-anchor", "middle")
+      .text("Restriction Speed (MPH)");
 
-svg.append("text")
-    .attr("x", width / 2)
-    .attr("y", -10)
-    .attr("text-anchor", "middle")
-    .style("font-size", "18px")
-    .text("Monthly Train Speed Restrictions by Line");
-
-const line = d3.line()
-    .x(d => x(d.date))
-    .y(d => y(d.Restriction_Speed_MPH));
-
-const tooltip = d3.select("body").append("div")
-    .attr("class", "tooltip");
-
-lines.forEach(lineName => {
-    const lineData = data.filter(d => d.Line === lineName);
-
-    svg.append("path")
-        .datum(lineData)
-        .attr("fill", "none")
+    // Line paths
+    grouped.forEach(([lineName, values]) => {
+      g.append("path")
+        .datum(values)
+        .attr("class", "line")
         .attr("stroke", color(lineName))
-        .attr("stroke-width", 2.5)
         .attr("d", line);
+    });
 
-    svg.selectAll(".dot")
-        .data(lineData)
+    // Tooltip
+    const tooltip = d3.select(".tooltip");
+
+    // Data circles
+    grouped.forEach(([lineName, values]) => {
+      g.selectAll(`.dot-${lineName.replace(/\s/g, '-')}`)
+        .data(values)
         .enter()
         .append("circle")
         .attr("cx", d => x(d.date))
         .attr("cy", d => y(d.Restriction_Speed_MPH))
         .attr("r", 4)
         .attr("fill", color(lineName))
-        .on("mouseover", (event, d) => {
-            tooltip.transition().duration(200).style("opacity", 0.9);
-            tooltip.html(`<strong>${d.Line}</strong><br>${d3.timeFormat("%B %Y")(d.date)}<br>Speed: ${d.Restriction_Speed_MPH} MPH<br>Days Active: ${d.Restriction_Days_Active}`)
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 28) + "px");
+        .on("mouseover", function (event, d) {
+          tooltip.transition().duration(200).style("opacity", 1);
+          tooltip.html(`<strong>${d.Line}</strong><br>${d3.timeFormat("%B %Y")(d.date)}<br>Speed: ${d.Restriction_Speed_MPH.toFixed(2)} MPH`)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 28) + "px");
         })
-        .on("mouseout", () => {
-            tooltip.transition().duration(500).style("opacity", 0);
-        });
-});
+        .on("mouseout", () => tooltip.transition().duration(300).style("opacity", 0));
+    });
 
-svg.append("text")
-    .attr("x", 0)
-    .attr("y", height + margin.bottom - 20)
-    .attr("text-anchor", "start")
-    .style("font-size", "12px")
-    .style("fill", "#333")
-    .text("In 2023, the policy context for the MBTA lines focused on infrastructure improvements, service reliability, and accessibility. Specifically, the MBTA implemented a Track Improvement Program to address speed restrictions and upgrade tracks. Simultaneously, the MBTA worked on enhancing service reliability by implementing new service delivery policies and methods for measuring success, including the Enhanced Trip Time (ETT) methodology.");
+    // Legend
+    const legend = svg.append("g")
+      .attr("transform", `translate(${width + margin.left + 20}, ${margin.top})`);
+
+    lines.forEach((lineName, i) => {
+      const row = legend.append("g").attr("transform", `translate(0, ${i * 20})`);
+      row.append("rect")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("fill", color(lineName));
+      row.append("text")
+        .attr("x", 15)
+        .attr("y", 10)
+        .text(lineName);
+    });
+
+    // Policy Annotation
+    g.append("text")
+      .attr("x", x(parseTime("2023-03")))
+      .attr("y", y(5))
+      .attr("fill", "#333")
+      .style("font-size", "12px")
+      .text("March 2023: Start of system-wide safety reviews.");
+
+    g.append("line")
+      .attr("x1", x(parseTime("2023-03")))
+      .attr("y1", y(5))
+      .attr("x2", x(parseTime("2023-03")))
+      .attr("y2", y(0))
+      .attr("stroke", "#555")
+      .attr("stroke-dasharray", "4");
+
+      const annotationText = [
+        "In 2023, the policy context for the MBTA lines focused on infrastructure improvements, service reliability, and accessibility.",
+        "Specifically, the MBTA implemented a Track Improvement Program to address speed restrictions and upgrade tracks.",
+        "Simultaneously, the MBTA worked on enhancing service reliability by implementing new service delivery ",
+        "policies and methods for measuring success, including the Enhanced Trip Time (ETT) methodology.".
+        "Then, in 2024, all of these policy peaked with speed restrictions & infrastructure, then relaxing in early 2025." 
+      ];
+      
+      const annotation = g.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - 10)
+        .attr("text-anchor", "middle")
+        .attr("fill", "#333")
+        .style("font-size", "12px");
+      
+      annotationText.forEach((line, i) => {
+        annotation.append("tspan")
+          .attr("x", width / 2)
+          .attr("dy", i === 0 ? "0" : "1.2em")
+          .text(line);
+      });
+  
 </script>
 </body>
 </html>
