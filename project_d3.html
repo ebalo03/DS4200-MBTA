@@ -117,7 +117,7 @@
       .domain(lines)
       .range(d3.schemeCategory10);
   
-  const x = d3.scaleTime()
+  const x = d3.scaleLinear()
       .domain(d3.extent(data, d => d.Restriction_Days_Active))
       .range([0, width]);
   
