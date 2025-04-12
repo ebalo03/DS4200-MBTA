@@ -151,14 +151,16 @@
       .attr("class", "tooltip");
   
   lines.forEach(lineName => {
-      const lineData = data.filter(d => d.Line === lineName);
-  
-      svg.append("path")
-          .datum(lineData)
-          .attr("fill", "none")
-          .attr("stroke", color(lineName))
-          .attr("stroke-width", 2.5)
-          .attr("d", line);
+    const lineData = data
+        .filter(d => d.Line === lineName)
+        .sort((a, b) => a.Restriction_Days_Active - b.Restriction_Days_Active);
+
+    svg.append("path")
+        .datum(lineData)
+        .attr("fill", "none")
+        .attr("stroke", color(lineName))
+        .attr("stroke-width", 2.5)
+        .attr("d", line);
   
       svg.selectAll(".dot")
           .data(lineData)
