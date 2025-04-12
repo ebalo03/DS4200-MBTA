@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scatter Plot - Train Speed Restrictions</title>
+  <title>Line Plot - Train Speed Restrictions</title>
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     .tooltip {
@@ -13,28 +13,29 @@
       border-radius: 5px;
       pointer-events: none;
       opacity: 0;
+      font-size: 12px;
     }
-
+    
     #vis.d3-embed {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     }
 
     #vis.d3-embed details,
     #vis.d3-embed details summary {
       position: relative;
-    }    
+    }
   </style>
 </head>
 <body>
 
-  <div id="vis" class="d3-embed"></div>
-  <svg width="800" height="500"></svg>
+<div id="vis" class="d3-embed"></div>
+<svg width="900" height="600"></svg>
 
-  <script>
-    const data = [
+<script>
+  const data = [
     {"Year-Month": "2023-01", "Line": "Blue Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 0.5},
     {"Year-Month": "2023-01", "Line": "Green Line", "Restriction_Speed_MPH": 7.75, "Restriction_Days_Active": 389.80},
     {"Year-Month": "2023-01", "Line": "Orange Line", "Restriction_Speed_MPH": 19.21, "Restriction_Days_Active": 34.56},
@@ -97,96 +98,93 @@
     {"Year-Month": "2025-02", "Line": "Red Line", "Restriction_Speed_MPH": 10.0, "Restriction_Days_Active": 2.75}
     ];
 
-    const margin = { top: 30, right: 40, bottom: 60, left: 70 };
-    const width = 800 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+const margin = { top: 50, right: 100, bottom: 80, left: 70 },
+      width = 900 - margin.left - margin.right,
+      height = 600 - margin.top - margin.bottom;
 
-    const svg = d3.select("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
+const svg = d3.select("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    // Create x and y scales
-    const x = d3.scaleLinear() 
-        .domain([d3.min(data, d => d.Restriction_Days_Active), d3.max(data, d => d.Restriction_Days_Active)])  // Linear domain based on Restriction_Days_Active
-        .nice()
-        .range([0, width]);
+const parseDate = d3.timeParse("%Y-%m");
+data.forEach(d => d.date = parseDate(d["Year-Month"]));
 
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => d.Restriction_Speed_MPH)])
-      .nice()
-      .range([height, 0]);
+const lines = Array.from(new Set(data.map(d => d.Line)));
 
-    // Add x-axis
-    svg.append("g")
-      .attr("class", "x-axis")
-      .attr("transform", `translate(0,${height})`)
-      .call(d3.axisBottom(x))
-      .selectAll("text")
-      .style("text-anchor", "middle")
-      .attr("transform", "rotate(45)");
+const color = d3.scaleOrdinal()
+    .domain(lines)
+    .range(d3.schemeCategory10);
 
-    // add y-axis
-    svg.append("g")
-      .attr("class", "y-axis")
-      .call(d3.axisLeft(y));
+const x = d3.scaleTime()
+    .domain(d3.extent(data, d => d.date))
+    .range([0, width]);
 
-    // tooltip setup
-    const tooltip = d3.select("body").append("div").attr("class", "tooltip");
+const y = d3.scaleLinear()
+    .domain([0, d3.max(data, d => d.Restriction_Speed_MPH)])
+    .range([height, 0]);
+
+svg.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x).ticks(12).tickFormat(d3.timeFormat("%b %Y")))
+    .selectAll("text")
+    .attr("transform", "rotate(-40)")
+    .style("text-anchor", "end");
+
+svg.append("g")
+    .call(d3.axisLeft(y));
+
+svg.append("text")
+    .attr("x", width / 2)
+    .attr("y", -10)
+    .attr("text-anchor", "middle")
+    .style("font-size", "18px")
+    .text("Monthly Train Speed Restrictions by Line");
+
+const line = d3.line()
+    .x(d => x(d.date))
+    .y(d => y(d.Restriction_Speed_MPH));
+
+const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip");
+
+lines.forEach(lineName => {
+    const lineData = data.filter(d => d.Line === lineName);
+
+    svg.append("path")
+        .datum(lineData)
+        .attr("fill", "none")
+        .attr("stroke", color(lineName))
+        .attr("stroke-width", 2.5)
+        .attr("d", line);
 
     svg.selectAll(".dot")
-        .data(data)
+        .data(lineData)
         .enter()
         .append("circle")
-        .attr("class", "dot")
-        .attr("cx", d => x(d.Restriction_Days_Active)) // position x-axis
-        .attr("cy", d => y(d.Restriction_Speed_MPH)) // position y-axis
-        .attr("r", 5)
-        .attr("fill", d => {
-            const colorMap = {
-            "Blue Line": "blue",
-            "Green Line": "green",
-            "Orange Line": "orange",
-            "Red Line": "red"
-            };
-            return colorMap[d.Line];
+        .attr("cx", d => x(d.date))
+        .attr("cy", d => y(d.Restriction_Speed_MPH))
+        .attr("r", 4)
+        .attr("fill", color(lineName))
+        .on("mouseover", (event, d) => {
+            tooltip.transition().duration(200).style("opacity", 0.9);
+            tooltip.html(`<strong>${d.Line}</strong><br>${d3.timeFormat("%B %Y")(d.date)}<br>Speed: ${d.Restriction_Speed_MPH} MPH<br>Days Active: ${d.Restriction_Days_Active}`)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 28) + "px");
         })
-    .on("mouseover", function(event, d) {
-        tooltip.transition().duration(200).style("opacity", 0.9);
-        tooltip.html(`Line: ${d.Line}<br>Month: ${d['Year-Month']}<br>Speed: ${d.Restriction_Speed_MPH} MPH<br>Days Active: ${d.Restriction_Days_Active} Days`)
-        .style("left", (event.pageX + 5) + "px")
-        .style("top", (event.pageY - 28) + "px");
-    })
-    .on("mouseout", function() {
-        tooltip.transition().duration(500).style("opacity", 0);
-    });
+        .on("mouseout", () => {
+            tooltip.transition().duration(500).style("opacity", 0);
+        });
+});
 
-    // chart title
-    svg.append("text")
-      .attr("x", width / 2)
-      .attr("y", -10)
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .text("Scatter Plot of Speed Restrictions vs Days of Restriction Active (2023-2025)");
-
-    // X-Axis Title
-    svg.append("text")
-        .attr("x", width / 2)           
-        .attr("y", height + margin.bottom - 10)  
-        .attr("text-anchor", "middle") 
-        .style("font-size", "14px") 
-        .text("Restriction Active (Avg. Days)");
-    
-    // Y-Axis Title
-    svg.append("text")
-        .attr("transform", "rotate(-90)")  
-        .attr("x", -height / 2)           
-        .attr("y", -margin.left + 20)     
-        .attr("text-anchor", "middle")    
-        .style("font-size", "14px") 
-        .text("Speed (MPH)");
-
-  </script>
+svg.append("text")
+    .attr("x", 0)
+    .attr("y", height + margin.bottom - 20)
+    .attr("text-anchor", "start")
+    .style("font-size", "12px")
+    .style("fill", "#333")
+    .text("In 2023, the policy context for the MBTA lines focused on infrastructure improvements, service reliability, and accessibility. Specifically, the MBTA implemented a Track Improvement Program to address speed restrictions and upgrade tracks. Simultaneously, the MBTA worked on enhancing service reliability by implementing new service delivery policies and methods for measuring success, including the Enhanced Trip Time (ETT) methodology.");
+</script>
 </body>
 </html>
