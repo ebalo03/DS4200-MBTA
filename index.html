@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,119 +7,355 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <title>MBTA in Motion: A Study of Public Transit Efficiency</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/arcgis-js-api/4.26/esri/themes/light/main.css">
+    <style>
+        #mapDiv {
+            height: 400px;
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-container {
+            margin: 20px 0;
+        }
+        
+        .map-caption {
+            font-size: 0.9rem;
+            color: #555;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <body>
-        <header>
-            <h1>MBTA in Motion: A Study of Public Transit Efficiency</h1>
-        </header>
-        <nav class="nav-bar">
-            <ul>
-                <li><a href="#intro">Introduction</a></li>
-                <li><a href="#data">Data</a></li>
-                <li><a href="#viz1">Viz 1</a></li>
-                <li><a href="#viz2">Viz 2</a></li>
-                <li><a href="#viz3">Viz 3</a></li>
-                <li><a href="#viz4">Viz 4</a></li>
-                <li><a href="#viz5">Viz 5</a></li>
-                <li><a href="#summary">Summary</a></li>
-            </ul>
-        </nav>
-        <main>
-            <section id="intro">
-                <h2>Project Introduction</h2>
-                <p>As students, we are keenly interested in exploring the ongoing service challenges facing the Massachusetts Bay Transportation Authority (MBTA), which serves as a vital link in Boston's public transportation system. 
-                    The MBTA plays a crucial role, serving thousands of commuters each day. However, persistent issues such as delays, slow zones, and inconsistent ridership patterns have led to frustration and decreased satisfaction among passengers. 
-                    Understanding the root causes of these problems is essential for improving the system's reliability and efficiency. In this project, we aim to analyze data on ridership trends, transit disruptions, 
-                    speed restrictions, and the frequency of active speed restriction days to uncover patterns that contribute to service interruptions. Through graphical visualizations, we hope to answer the question:
-                    How is the MBTA so slow? By identifying key areas of the system that require attention—whether related to infrastructure, scheduling, or operational factors—we aim to provide valuable insights. 
-                    Our findings will help policymakers, transit planners, and riders, supporting efforts to improve the MBTA’s reliability and overall effectiveness for the benefit of Boston's commuting community.</p>
-            </section>
+    <header>
+        <h1>MBTA in Motion: A Study of Public Transit Efficiency</h1>
+    </header>
+    <nav class="nav-bar">
+        <ul>
+            <li><a href="#intro">Introduction</a></li>
+            <li><a href="#data">Data</a></li>
+            <li><a href="#viz1">Viz 1</a></li>
+            <li><a href="#viz2">Viz 2</a></li>
+            <li><a href="#viz3">Viz 3</a></li>
+            <li><a href="#viz4">Viz 4</a></li>
+            <li><a href="#viz5">Viz 5</a></li>
+            <li><a href="#summary">Summary</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="intro">
+            <h2>Project Introduction</h2>
+            <p>As students, we are keenly interested in exploring the ongoing service challenges facing the Massachusetts Bay Transportation Authority (MBTA), which serves as a vital link in Boston's public transportation system. 
+                The MBTA plays a crucial role, serving thousands of commuters each day. However, persistent issues such as delays, slow zones, and inconsistent ridership patterns have led to frustration and decreased satisfaction among passengers. 
+                Understanding the root causes of these problems is essential for improving the system's reliability and efficiency.</p>
+                
+            <div class="map-container">
+                <div id="mapDiv"></div>
+                <p class="map-caption">Figure: MBTA Transit System Map - Highlighting service routes and speed restriction areas</p>
+            </div>
             
-            <h2>References</h2>
-            <p>
-                <li><a href="https://www.jstor.org/stable/43081823">“What Affects Transit Ridership? A Dynamic Analysis involving Multiple Factors, Lags, and Asymmetric Behavior" </a></li>
-                <li><a href="https://www.jstor.org/stable/20053992">"Performance Measurement for Railway Transport: Stochastic Distance Functions with Inefficiency and Ineffectiveness Effects"</a></li>
+            <p>In this project, we aim to analyze data on ridership trends, transit disruptions, 
+                speed restrictions, and the frequency of active speed restriction days to uncover patterns that contribute to service interruptions. Through graphical visualizations, we hope to answer the question:
+                How is the MBTA so slow? By identifying key areas of the system that require attention—whether related to infrastructure, scheduling, or operational factors—we aim to provide valuable insights. 
+                Our findings will help policymakers, transit planners, and riders, supporting efforts to improve the MBTA's reliability and overall effectiveness for the benefit of Boston's commuting community.</p>
+        </section>
+        
+        <h2>References</h2>
+        <p>
+            <li><a href="https://www.jstor.org/stable/43081823">"What Affects Transit Ridership? A Dynamic Analysis involving Multiple Factors, Lags, and Asymmetric Behavior" </a></li>
+            <li><a href="https://www.jstor.org/stable/20053992">"Performance Measurement for Railway Transport: Stochastic Distance Functions with Inefficiency and Ineffectiveness Effects"</a></li>
+        </p>
+
+        <section id="data">
+            <h2>Data Overview</h2>
+            <p>We used several datasets from the MBTA's Blue Book Open Data Portal. The datasets we used to make our visualizations were:
+                MBTA Monthly Ridership By Mode and Line and the MBTA Rapid Transit Speed Restrictions by Day. The MBTA Monthly Ridership By Mode and Line
+                dataset consists of over 4000 records containing the total and average daily ridership per month by day type (weekend or workday), transportation 
+                mode, and line. Our other dataset, the MBTA Rapid Transit Speed Restrictions by Day consisted of over 100,000 observations of daily speed restrictions from 2023 to 2025, which
+                we reduced by taking monthly averages of the speed restrictions to minimize the size of the data to around 100 observations. 
+                The attributes included information about the line where the speed restriction was active, the number of speed restrictions at the beginning and end of the month,
+                the speed limit of the restriction, the distance of the restriction, and the number of active restrictions per line. 
             </p>
+        </section>
+        
+        <h2>Data Visualizations</h2>
+        <section class="visualization" id="viz1">
+            <h3>Active Speed Restrictions for the 4 Major MBTA Lines</h3>
+            <p>This stacked barplot shows the number of active speed restrictions across the 4 major MBTA lines at the beginning of each month, and the number of active speed restrictions at the end
+                of each month. The purpose of this figure is to demonstrate how the number of speed restrictions at the start and end of the month is roughly equal in most cases, suggesting 
+                that the MBTA struggles to address the problem with speed restrictions, as they are unable to significantly reduce the number of restrictions in a monthly period. Data from 2024
+                suggests that the MBTA is starting to impose less speed restrictions. </p>
+            <div class="chart" id="chart1"></div>
+            <iframe src="monthly_restrictions_chart.html" width="100%" height="500px"></iframe>
+        </section>
 
-            <section id="data">
-                <h2>Data Overview</h2>
-                <p>We used several datasets from the MBTA’s Blue Book Open Data Portal. The datasets we used to make our visualizations were:
-                    MBTA Monthly Ridership By Mode and Line and the MBTA Rapid Transit Speed Restrictions by Day. The MBTA Monthly Ridership By Mode and Line
-                    dataset consists of over 4000 records containing the total and average daily ridership per month by day type (weekend or workday), transportation 
-                    mode, and line. Our other dataset, the MBTA Rapid Transit Speed Restrictions by Day consisted of over 100,000 observations of daily speed restrictions from 2023 to 2025, which
-                    we reduced by taking monthly averages of the speed restrictions to minimize the size of the data to around 100 observations. 
-                    The attributes included information about the line where the speed restriction was active, the number of speed restrictions at the beginning and end of the month,
-                    the speed limit of the restriction, the distance of the restriction, and the number of active restrictions per line. 
-                </p>
-            </section>
-            
-            <h2>Data Visualizations</h2>
-            <section class="visualization" id="viz1">
-                <h3>Active Speed Restrictions for the 4 Major MBTA Lines</h3>
-                <p>This stacked barplot shows the number of active speed restrictions across the 4 major MBTA lines at the beginning of each month, and the number of active speed restrictions at the end
-                    of each month. The purpose of this figure is to demonstrate how the number of speed restrictions at the start and end of the month is roughly equal in most cases, suggesting 
-                    that the MBTA struggles to address the problem with speed restrictions, as they are unable to significantly reduce the number of restrictions in a monthly period. Data from 2024
-                    suggests that the MBTA is starting to impose less speed restrictions. </p>
-                <div class="chart" id="chart1"></div>
-                <iframe src="monthly_restrictions_chart.html" width="100%" height="500px"></iframe>
-            </section>
+        <section class="visualization" id="viz2">
+            <h3>Speed Restrictions Per Line, on the Granular!</h3>
+            <p>This boxplot visualizes the speed restrictions (measured in miles per hour) across the MBTA's various lines from 2023 to 2025. The purpose of this graph is to illustrate the range and 
+                distribution of these restrictions for each line, offering insights into how speed limitations impact different segments of the transit system. If you hover over the boxplot, the user can
+                see the IQR range of each line, so please feel free to do so yourself! From the visualization, it is evident that while most of the speed restriction data falls within a consolidated range
+                for each line, and although there are notable outliers; particularly on the Red, Orange, and Blue lines; where certain restrictions deviate significantly from the norm. 
+                These outliers can indicate instances where a specific track section experiences much more severe speed limitations compared to the overall trend for that line. The Green Line
+                 exhibits the lowest median speed restriction, making it the slowest among the MBTA lines. This aligns with its status as a 
+                light rail system, which often operates at reduced speeds due to factors such as track design, at-grade crossings, and vehicle capabilities. In contrast, the Orange Line tends to have 
+                higher speed restrictions, suggesting that it generally operates at faster speeds than the other lines. This could be due to factors such as newer track infrastructure or fewer bottlenecks 
+                that necessitate slower operation. The Red and Blue Lines appear relatively similar in terms of their speed restriction distributions, with only a slight variation in their median values. 
+                This suggests that riders on both lines experience comparable levels of speed regulation, albeit with occasional deviations due to outliers. Overall, this boxplot provides a clear comparative 
+                view of how speed restrictions vary across MBTA lines, highlighting both consistent trends and anomalies in their operational constraints.</p>
+            <div class="chart" id="chart2"></div>
+            <iframe src="speed_restrictions_boxplot.html" width="100%" height="600px"></iframe>
+        </section>
+        
+        <section class="visualization" id="viz3">
+            <h3>Ridership Trends for Each MBTA Line</h3>
+            <p>This line plot illustrates ridership trends for each transit line and buses from August 2018 to December 2024. Click on a legend label to highlight a specific line. Ridership across all lines 
+                dropped sharply at the start of the COVID-19 pandemic in 2020 and has yet to return to pre-pandemic levels. Among all lines, the Green Line experienced the most volatility, with ridership plunging 
+                close to early pandemic levels again in 2024. </p>
+            <div class="chart" id="chart3"></div>
+            <iframe src="ridership_line_plot.html" width="100%" height="500px"></iframe>
+        </section>
+        
+        <section class="visualization" id="viz4">
+            <h3>2025 Reported Days with Speed Restrictions</h3>
+            <p>This bar graph shows the number of days with reported speed restrictions for various lines of the MBTA in 2025. The Green Line Trunk experienced the highest number of restricted days by far, with 77 days, 
+                indicating significant operational issues or ongoing maintenance. The Red Line – Mattapan also had a high number, with 45 days, followed by the Red Line – Braintree and Red Line – Ashmont, each with 
+                around 24–26 days. The Orange Line had 13 days, while the Green Line – C saw 7 days of restrictions. In contrast, the Green Line – B and Blue Line had the fewest restrictions, with just 1 day each. 
+                Overall, this suggests that certain sections of the Green and Red Lines faced more service disruptions and safety-related slowdowns than others in 2025.</p>
+            <div class="chart" id="chart4"></div>
+            <iframe src="bar_plot.html" width="100%" height="500px"></iframe>
+        </section>
+        
+        <section class="visualization" id="viz5">
+            <h3>Average Duration of Restrictions per Month</h3>
+            <p>This D3 line plot visualizes the relationship between MBTA speed restrictions (MPH) and the average duration (in days) that these restrictions have been in place, with each data point color-coded by line (Orange, Blue, Red, or Green). 
+                The graph reveals that each MBTA line follows a relatively constant trajectory in its restriction patterns, while also highlighting a broader trend over time. Early 2023 had lower speed restrictions compared to 2024, which saw an 
+                overall increase in both severity and duration, likely due to expanded track repair programs and safety audits following infrastructure concerns. In contrast, 2025 experienced significantly fewer and shorter-lived restrictions, suggesting 
+                that major capital improvement projects; such as rail replacements and station upgrades, had been completed, allowing for more normal train operations. This overall trend reflects the MBTA's evolving approach to balancing safety measures 
+                with transit efficiency, adapting policies as infrastructure improvements progress.</p>
+            <div class="chart" id="chart5"></div>
+            <iframe src="project_d3.html" width="100%" height="500px"></iframe>
+        </section>
 
-            <section class="visualization" id="viz2">
-                <h3>Speed Restrictions Per Line, on the Granular!</h3>
-                <p>This boxplot visualizes the speed restrictions (measured in miles per hour) across the MBTA’s various lines from 2023 to 2025. The purpose of this graph is to illustrate the range and 
-                    distribution of these restrictions for each line, offering insights into how speed limitations impact different segments of the transit system. If you hover over the boxplot, the user can
-                    see the IQR range of each line, so please feel free to do so yourself! From the visualization, it is evident that while most of the speed restriction data falls within a consolidated range
-                    for each line, and although there are notable outliers; particularly on the Red, Orange, and Blue lines; where certain restrictions deviate significantly from the norm. 
-                    These outliers can indicate instances where a specific track section experiences much more severe speed limitations compared to the overall trend for that line. The Green Line
-                     exhibits the lowest median speed restriction, making it the slowest among the MBTA lines. This aligns with its status as a 
-                    light rail system, which often operates at reduced speeds due to factors such as track design, at-grade crossings, and vehicle capabilities. In contrast, the Orange Line tends to have 
-                    higher speed restrictions, suggesting that it generally operates at faster speeds than the other lines. This could be due to factors such as newer track infrastructure or fewer bottlenecks 
-                    that necessitate slower operation. The Red and Blue Lines appear relatively similar in terms of their speed restriction distributions, with only a slight variation in their median values. 
-                    This suggests that riders on both lines experience comparable levels of speed regulation, albeit with occasional deviations due to outliers. Overall, this boxplot provides a clear comparative 
-                    view of how speed restrictions vary across MBTA lines, highlighting both consistent trends and anomalies in their operational constraints.</p>
-                <div class="chart" id="chart2"></div>
-                <iframe src="speed_restrictions_boxplot.html" width="100%" height="600px"></iframe>
-            </section>
-            
-            <section class="visualization" id="viz3">
-                <h3>Ridership Trends for Each MBTA Line</h3>
-                <p>This line plot illustrates ridership trends for each transit line and buses from August 2018 to December 2024. Click on a legend label to highlight a specific line. Ridership across all lines 
-                    dropped sharply at the start of the COVID-19 pandemic in 2020 and has yet to return to pre-pandemic levels. Among all lines, the Green Line experienced the most volatility, with ridership plunging 
-                    close to early pandemic levels again in 2024. </p>
-                <div class="chart" id="chart3"></div>
-                <iframe src="ridership_line_plot.html" width="100%" height="500px"></iframe>
-            </section>
-            
-            <section class="visualization" id="viz4">
-                <h3>2025 Reported Days with Speed Restrictions</h3>
-                <p>This bar graph shows the number of days with reported speed restrictions for various lines of the MBTA in 2025. The Green Line Trunk experienced the highest number of restricted days by far, with 77 days, 
-                    indicating significant operational issues or ongoing maintenance. The Red Line – Mattapan also had a high number, with 45 days, followed by the Red Line – Braintree and Red Line – Ashmont, each with 
-                    around 24–26 days. The Orange Line had 13 days, while the Green Line – C saw 7 days of restrictions. In contrast, the Green Line – B and Blue Line had the fewest restrictions, with just 1 day each. 
-                    Overall, this suggests that certain sections of the Green and Red Lines faced more service disruptions and safety-related slowdowns than others in 2025.</p>
-                <div class="chart" id="chart4"></div>
-                <iframe src="bar_plot.html" width="100%" height="500px"></iframe>
-            </section>
-            
-            <section class="visualization" id="viz5">
-                <h3>Average Duration of Restrictions per Month</h3>
-                <p>This D3 line plot visualizes the relationship between MBTA speed restrictions (MPH) and the average duration (in days) that these restrictions have been in place, with each data point color-coded by line (Orange, Blue, Red, or Green). 
-                    The graph reveals that each MBTA line follows a relatively constant trajectory in its restriction patterns, while also highlighting a broader trend over time. Early 2023 had lower speed restrictions compared to 2024, which saw an 
-                    overall increase in both severity and duration, likely due to expanded track repair programs and safety audits following infrastructure concerns. In contrast, 2025 experienced significantly fewer and shorter-lived restrictions, suggesting 
-                    that major capital improvement projects; such as rail replacements and station upgrades, had been completed, allowing for more normal train operations. This overall trend reflects the MBTA’s evolving approach to balancing safety measures 
-                    with transit efficiency, adapting policies as infrastructure improvements progress.</p>
-                <div class="chart" id="chart5"></div>
-                <iframe src="project_d3.html" width="100%" height="500px"></iframe>
-            </section>
+        <section id="summary">
+            <h2>Findings & Summary</h2>
+            <p>Our analysis revealed that the Green Line experiences the most speed restrictions and operates at the slowest pace compared to other MBTA lines. Additionally, it has the most turbulent ridership patterns, 
+                likely due to these persistent delays and operational challenges. Notably, these speed restrictions are active on average for longer periods than on any other line, exacerbating delays and inefficiencies. 
+                This was our primary takeaway from the visualizations we created, but a more comprehensive analysis could uncover deeper insights, such as identifying specific causes for these restrictions or patterns in ridership behavior. 
+                These findings could assist the MBTA in pinpointing critical areas for improvement—ranging from addressing speed restrictions to optimizing service reliability. Ultimately, implementing these changes could enhance the overall 
+                rider experience and boost public transit usage in Boston.</p>
+        </section>
+    </main>
 
-            <section id="summary">
-                <h2>Findings & Summary</h2>
-                <p>Our analysis revealed that the Green Line experiences the most speed restrictions and operates at the slowest pace compared to other MBTA lines. Additionally, it has the most turbulent ridership patterns, 
-                    likely due to these persistent delays and operational challenges. Notably, these speed restrictions are active on average for longer periods than on any other line, exacerbating delays and inefficiencies. 
-                    This was our primary takeaway from the visualizations we created, but a more comprehensive analysis could uncover deeper insights, such as identifying specific causes for these restrictions or patterns in ridership behavior. 
-                    These findings could assist the MBTA in pinpointing critical areas for improvement—ranging from addressing speed restrictions to optimizing service reliability. Ultimately, implementing these changes could enhance the overall 
-                    rider experience and boost public transit usage in Boston.</p>
-            </section>
-        </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/arcgis-js-api/4.26/init.js"></script>
+    <script>
+        require([
+            "esri/Map",
+            "esri/views/MapView",
+            "esri/layers/FeatureLayer",
+            "esri/layers/GraphicsLayer",
+            "esri/Graphic",
+            "esri/symbols/SimpleLineSymbol",
+            "esri/widgets/Legend",
+            "esri/widgets/Expand",
+            "esri/widgets/Home"
+        ], function(Map, MapView, FeatureLayer, GraphicsLayer, Graphic, SimpleLineSymbol, Legend, Expand, Home) {
+            
+            const map = new Map({
+                basemap: "gray-vector"
+            });
+            
+            const view = new MapView({
+                container: "mapDiv",
+                map: map,
+                center: [-71.0589, 42.3601], 
+                zoom: 12
+            });
+            
+            const homeBtn = new Home({
+                view: view
+            });
+            view.ui.add(homeBtn, "top-left");
+            
+            const mbtaRoutesLayer = new GraphicsLayer();
+            map.add(mbtaRoutesLayer);
+            
+            const redLinePoints = [
+                [-71.0600, 42.3952], 
+                [-71.0636, 42.3884],
+                [-71.0626, 42.3734], 
+                [-71.1097, 42.3656], 
+                [-71.1031, 42.3655], 
+                [-71.0955, 42.3626], 
+                [-71.0703, 42.3613], 
+                [-71.0626, 42.3566], 
+                [-71.0551, 42.3551],
+                [-71.0572, 42.3422], 
+                [-71.0571, 42.3301], 
+                [-71.0520, 42.3201], 
+                [-71.0529, 42.2749] 
+            ];
+            
+            const orangeLinePoints = [
+                [-71.0707, 42.4353], 
+                [-71.0712, 42.4260], 
+                [-71.0741, 42.4047], 
+                [-71.0770, 42.3935], 
+                [-71.0774, 42.3839], 
+                [-71.0704, 42.3737], 
+                [-71.0624, 42.3664], 
+                [-71.0614, 42.3613], 
+                [-71.0581, 42.3581], 
+                [-71.0625, 42.3525], 
+                [-71.0624, 42.3469], 
+                [-71.0595, 42.3469], 
+                [-71.0765, 42.3417], 
+                [-71.0852, 42.3348], 
+                [-71.0991, 42.3267] 
+            ];
+            
+            const blueLinePoints = [
+                [-70.9922, 42.4100], 
+                [-70.9958, 42.4072], 
+                [-71.0038, 42.4032], 
+                [-71.0131, 42.3969], 
+                [-71.0228, 42.3936], 
+                [-71.0403, 42.3865], 
+                [-71.0525, 42.3742], 
+                [-71.0568, 42.3691], 
+                [-71.0525, 42.3616], 
+                [-71.0518, 42.3586], 
+                [-71.0621, 42.3559], 
+                [-71.0694, 42.3528] 
+            ];
+            
+            const greenLinePoints = [
+                [-71.1419, 42.3466], 
+                [-71.1212, 42.3508],
+                [-71.1024, 42.3513], 
+                [-71.0866, 42.3495], 
+                [-71.0779, 42.3488], 
+                [-71.0709, 42.3470], 
+                [-71.0624, 42.3511], 
+                [-71.0626, 42.3561]  
+            ];
+            
+            
+            const redLineSymbol = new SimpleLineSymbol({
+                color: [220, 36, 31], 
+                width: 4
+            });
+            
+            const redLineGraphic = new Graphic({
+                geometry: {
+                    type: "polyline",
+                    paths: [redLinePoints],
+                    spatialReference: {wkid: 4326}
+                },
+                symbol: redLineSymbol,
+                attributes: {
+                    name: "Red Line",
+                    description: "MBTA Red Line"
+                },
+                popupTemplate: {
+                    title: "{name}",
+                    content: "Speed restrictions: High<br>Average speed: 13-16 MPH in restricted areas"
+                }
+            });
+            
+            const orangeLineSymbol = new SimpleLineSymbol({
+                color: [237, 139, 0], 
+                width: 4
+            });
+            
+            const orangeLineGraphic = new Graphic({
+                geometry: {
+                    type: "polyline",
+                    paths: [orangeLinePoints],
+                    spatialReference: {wkid: 4326}
+                },
+                symbol: orangeLineSymbol,
+                attributes: {
+                    name: "Orange Line",
+                    description: "MBTA Orange Line"
+                },
+                popupTemplate: {
+                    title: "{name}",
+                    content: "Speed restrictions: Medium<br>Average speed: 18-20 MPH in restricted areas"
+                }
+            });
+            
+            const blueLineSymbol = new SimpleLineSymbol({
+                color: [0, 61, 165],
+                width: 4
+            });
+            
+            const blueLineGraphic = new Graphic({
+                geometry: {
+                    type: "polyline",
+                    paths: [blueLinePoints],
+                    spatialReference: {wkid: 4326}
+                },
+                symbol: blueLineSymbol,
+                attributes: {
+                    name: "Blue Line",
+                    description: "MBTA Blue Line"
+                },
+                popupTemplate: {
+                    title: "{name}",
+                    content: "Speed restrictions: Medium-Low<br>Average speed: 16-19 MPH in restricted areas"
+                }
+            });
+            
+            const greenLineSymbol = new SimpleLineSymbol({
+                color: [0, 132, 61], 
+                width: 4
+            });
+            
+            const greenLineGraphic = new Graphic({
+                geometry: {
+                    type: "polyline",
+                    paths: [greenLinePoints],
+                    spatialReference: {wkid: 4326}
+                },
+                symbol: greenLineSymbol,
+                attributes: {
+                    name: "Green Line",
+                    description: "MBTA Green Line"
+                },
+                popupTemplate: {
+                    title: "{name}",
+                    content: "Speed restrictions: Very High<br>Average speed: 7-11 MPH in restricted areas"
+                }
+            });
+            
+            // Add all lines to the graphics layer
+            mbtaRoutesLayer.add(redLineGraphic);
+            mbtaRoutesLayer.add(orangeLineGraphic);
+            mbtaRoutesLayer.add(blueLineGraphic);
+            mbtaRoutesLayer.add(greenLineGraphic);
+            
+            // Add a legend
+            const legend = new Legend({
+                view: view,
+                layerInfos: [{
+                    layer: mbtaRoutesLayer,
+                    title: "MBTA Lines"
+                }]
+            });
+            
+            const legendExpand = new Expand({
+                view: view,
+                content: legend,
+                expanded: true
+            });
+            
+            view.ui.add(legendExpand, "bottom-right");
+            
+        });
+    </script>
 </body>
 </html>
