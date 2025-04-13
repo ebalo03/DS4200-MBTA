@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #vis.vega-embed {
+      width: 100%;
+      display: flex;
+    }
+
+    #vis.vega-embed details,
+    #vis.vega-embed details summary {
+      position: relative;
+    }
+  </style>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-lite@5.20.1"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+</head>
+<body>
+  <div id="vis"></div>
+  <script>
+    (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-1bb815e1f4b8df2918a5187b9a18aa95"}, "mark": {"type": "bar"}, "encoding": {"color": {"field": "restriction_type", "scale": {"domain": ["Restrictions at Start of the Month", "Restrictions by End of the Month"], "range": ["#636363", "#6baed6"]}, "title": "Restriction Type", "type": "nominal"}, "tooltip": [{"field": "Year-Month", "title": "Month and Year", "type": "nominal"}, {"field": "restriction_type", "title": "Restriction Type", "type": "nominal"}, {"field": "count", "title": "# of Restrictions", "type": "quantitative"}], "x": {"axis": {"labelAngle": 45}, "field": "Year-Month", "title": "Month", "type": "nominal"}, "y": {"field": "count", "title": "Number of Restrictions", "type": "quantitative"}}, "height": 400, "title": "# of Speed Restrictions at the Start vs End of the Month", "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v5.20.1.json", "datasets": {"data-1bb815e1f4b8df2918a5187b9a18aa95": [{"Year-Month": "2023-01", "restriction_type": "Restrictions at Start of the Month", "count": 52}, {"Year-Month": "2023-02", "restriction_type": "Restrictions at Start of the Month", "count": 70}, {"Year-Month": "2023-03", "restriction_type": "Restrictions at Start of the Month", "count": 84}, {"Year-Month": "2023-04", "restriction_type": "Restrictions at Start of the Month", "count": 228}, {"Year-Month": "2023-05", "restriction_type": "Restrictions at Start of the Month", "count": 428}, {"Year-Month": "2023-06", "restriction_type": "Restrictions at Start of the Month", "count": 206}, {"Year-Month": "2023-07", "restriction_type": "Restrictions at Start of the Month", "count": 223}, {"Year-Month": "2023-08", "restriction_type": "Restrictions at Start of the Month", "count": 223}, {"Year-Month": "2023-09", "restriction_type": "Restrictions at Start of the Month", "count": 232}, {"Year-Month": "2023-10", "restriction_type": "Restrictions at Start of the Month", "count": 237}, {"Year-Month": "2023-11", "restriction_type": "Restrictions at Start of the Month", "count": 195}, {"Year-Month": "2023-12", "restriction_type": "Restrictions at Start of the Month", "count": 179}, {"Year-Month": "2024-01", "restriction_type": "Restrictions at Start of the Month", "count": 143}, {"Year-Month": "2024-02", "restriction_type": "Restrictions at Start of the Month", "count": 127}, {"Year-Month": "2024-03", "restriction_type": "Restrictions at Start of the Month", "count": 135}, {"Year-Month": "2024-04", "restriction_type": "Restrictions at Start of the Month", "count": 113}, {"Year-Month": "2024-05", "restriction_type": "Restrictions at Start of the Month", "count": 95}, {"Year-Month": "2024-06", "restriction_type": "Restrictions at Start of the Month", "count": 89}, {"Year-Month": "2024-07", "restriction_type": "Restrictions at Start of the Month", "count": 80}, {"Year-Month": "2024-08", "restriction_type": "Restrictions at Start of the Month", "count": 75}, {"Year-Month": "2024-09", "restriction_type": "Restrictions at Start of the Month", "count": 64}, {"Year-Month": "2024-10", "restriction_type": "Restrictions at Start of the Month", "count": 33}, {"Year-Month": "2024-11", "restriction_type": "Restrictions at Start of the Month", "count": 16}, {"Year-Month": "2024-12", "restriction_type": "Restrictions at Start of the Month", "count": 2}, {"Year-Month": "2025-02", "restriction_type": "Restrictions at Start of the Month", "count": 2}, {"Year-Month": "NaT", "restriction_type": "Restrictions at Start of the Month", "count": 0}, {"Year-Month": "2023-01", "restriction_type": "Restrictions by End of the Month", "count": 70}, {"Year-Month": "2023-02", "restriction_type": "Restrictions by End of the Month", "count": 84}, {"Year-Month": "2023-03", "restriction_type": "Restrictions by End of the Month", "count": 228}, {"Year-Month": "2023-04", "restriction_type": "Restrictions by End of the Month", "count": 214}, {"Year-Month": "2023-05", "restriction_type": "Restrictions by End of the Month", "count": 412}, {"Year-Month": "2023-06", "restriction_type": "Restrictions by End of the Month", "count": 223}, {"Year-Month": "2023-07", "restriction_type": "Restrictions by End of the Month", "count": 223}, {"Year-Month": "2023-08", "restriction_type": "Restrictions by End of the Month", "count": 232}, {"Year-Month": "2023-09", "restriction_type": "Restrictions by End of the Month", "count": 237}, {"Year-Month": "2023-10", "restriction_type": "Restrictions by End of the Month", "count": 195}, {"Year-Month": "2023-11", "restriction_type": "Restrictions by End of the Month", "count": 179}, {"Year-Month": "2023-12", "restriction_type": "Restrictions by End of the Month", "count": 143}, {"Year-Month": "2024-01", "restriction_type": "Restrictions by End of the Month", "count": 127}, {"Year-Month": "2024-02", "restriction_type": "Restrictions by End of the Month", "count": 135}, {"Year-Month": "2024-03", "restriction_type": "Restrictions by End of the Month", "count": 113}, {"Year-Month": "2024-04", "restriction_type": "Restrictions by End of the Month", "count": 95}, {"Year-Month": "2024-05", "restriction_type": "Restrictions by End of the Month", "count": 89}, {"Year-Month": "2024-06", "restriction_type": "Restrictions by End of the Month", "count": 80}, {"Year-Month": "2024-07", "restriction_type": "Restrictions by End of the Month", "count": 75}, {"Year-Month": "2024-08", "restriction_type": "Restrictions by End of the Month", "count": 64}, {"Year-Month": "2024-09", "restriction_type": "Restrictions by End of the Month", "count": 33}, {"Year-Month": "2024-10", "restriction_type": "Restrictions by End of the Month", "count": 16}, {"Year-Month": "2024-11", "restriction_type": "Restrictions by End of the Month", "count": 3}, {"Year-Month": "2024-12", "restriction_type": "Restrictions by End of the Month", "count": 0}, {"Year-Month": "2025-02", "restriction_type": "Restrictions by End of the Month", "count": 4}, {"Year-Month": "NaT", "restriction_type": "Restrictions by End of the Month", "count": 0}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+
+  </script>
+</body>
+</html>
