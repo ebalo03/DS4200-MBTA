@@ -4,13 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <title>MBTA in Motion: A Study of Public Transit Efficiency</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/arcgis-js-api/4.26/esri/themes/light/main.css">
     <style>
         #mapDiv {
-            height: 400px;
+            height: 600px;
             width: 100%;
             margin: 20px 0;
             border-radius: 8px;
@@ -29,6 +27,7 @@
             margin-top: 10px;
         }
     </style>
+    <script type="module" src="https://js.arcgis.com/embeddable-components/4.32/arcgis-embeddable-components.esm.js"></script>
 </head>
 <body>
     <header>
@@ -54,8 +53,10 @@
                 Understanding the root causes of these problems is essential for improving the system's reliability and efficiency.</p>
                 
             <div class="map-container">
-                <div id="mapDiv"></div>
-                <p class="map-caption">Figure: MBTA Transit System Map - Highlighting service routes and speed restriction areas</p>
+                <div id="mapDiv">
+                 <arcgis-embedded-map style="height:600px;width:900px;" item-id="0ca115c5fd3e46ce97a6e31caa5457e6" theme="light" heading-enabled legend-enabled portal-url="https://nu.maps.arcgis.com" ></arcgis-embedded-map>
+                </div>
+                <p class="map-caption">Figure: MBTA Transit System Map - Highlighting service routes, ridership (red dots), and realiability (blue scaled dot)</p>
             </div>
             
             <p>In this project, we aim to analyze data on ridership trends, transit disruptions, 
@@ -149,213 +150,5 @@
                 rider experience and boost public transit usage in Boston.</p>
         </section>
     </main>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/arcgis-js-api/4.26/init.js"></script>
-    <script>
-        require([
-            "esri/Map",
-            "esri/views/MapView",
-            "esri/layers/FeatureLayer",
-            "esri/layers/GraphicsLayer",
-            "esri/Graphic",
-            "esri/symbols/SimpleLineSymbol",
-            "esri/widgets/Legend",
-            "esri/widgets/Expand",
-            "esri/widgets/Home"
-        ], function(Map, MapView, FeatureLayer, GraphicsLayer, Graphic, SimpleLineSymbol, Legend, Expand, Home) {
-            
-            const map = new Map({
-                basemap: "gray-vector"
-            });
-            
-            const view = new MapView({
-                container: "mapDiv",
-                map: map,
-                center: [-71.0589, 42.3601], 
-                zoom: 12
-            });
-            
-            const homeBtn = new Home({
-                view: view
-            });
-            view.ui.add(homeBtn, "top-left");
-            
-            const mbtaRoutesLayer = new GraphicsLayer();
-            map.add(mbtaRoutesLayer);
-            
-            const redLinePoints = [
-                [-71.0600, 42.3952], 
-                [-71.0636, 42.3884],
-                [-71.0626, 42.3734], 
-                [-71.1097, 42.3656], 
-                [-71.1031, 42.3655], 
-                [-71.0955, 42.3626], 
-                [-71.0703, 42.3613], 
-                [-71.0626, 42.3566], 
-                [-71.0551, 42.3551],
-                [-71.0572, 42.3422], 
-                [-71.0571, 42.3301], 
-                [-71.0520, 42.3201], 
-                [-71.0529, 42.2749] 
-            ];
-            
-            const orangeLinePoints = [
-                [-71.0707, 42.4353], 
-                [-71.0712, 42.4260], 
-                [-71.0741, 42.4047], 
-                [-71.0770, 42.3935], 
-                [-71.0774, 42.3839], 
-                [-71.0704, 42.3737], 
-                [-71.0624, 42.3664], 
-                [-71.0614, 42.3613], 
-                [-71.0581, 42.3581], 
-                [-71.0625, 42.3525], 
-                [-71.0624, 42.3469], 
-                [-71.0595, 42.3469], 
-                [-71.0765, 42.3417], 
-                [-71.0852, 42.3348], 
-                [-71.0991, 42.3267] 
-            ];
-            
-            const blueLinePoints = [
-                [-70.9922, 42.4100], 
-                [-70.9958, 42.4072], 
-                [-71.0038, 42.4032], 
-                [-71.0131, 42.3969], 
-                [-71.0228, 42.3936], 
-                [-71.0403, 42.3865], 
-                [-71.0525, 42.3742], 
-                [-71.0568, 42.3691], 
-                [-71.0525, 42.3616], 
-                [-71.0518, 42.3586], 
-                [-71.0621, 42.3559], 
-                [-71.0694, 42.3528] 
-            ];
-            
-            const greenLinePoints = [
-                [-71.1419, 42.3466], 
-                [-71.1212, 42.3508],
-                [-71.1024, 42.3513], 
-                [-71.0866, 42.3495], 
-                [-71.0779, 42.3488], 
-                [-71.0709, 42.3470], 
-                [-71.0624, 42.3511], 
-                [-71.0626, 42.3561]  
-            ];
-            
-            
-            const redLineSymbol = new SimpleLineSymbol({
-                color: [220, 36, 31], 
-                width: 4
-            });
-            
-            const redLineGraphic = new Graphic({
-                geometry: {
-                    type: "polyline",
-                    paths: [redLinePoints],
-                    spatialReference: {wkid: 4326}
-                },
-                symbol: redLineSymbol,
-                attributes: {
-                    name: "Red Line",
-                    description: "MBTA Red Line"
-                },
-                popupTemplate: {
-                    title: "{name}",
-                    content: "Speed restrictions: High<br>Average speed: 13-16 MPH in restricted areas"
-                }
-            });
-            
-            const orangeLineSymbol = new SimpleLineSymbol({
-                color: [237, 139, 0], 
-                width: 4
-            });
-            
-            const orangeLineGraphic = new Graphic({
-                geometry: {
-                    type: "polyline",
-                    paths: [orangeLinePoints],
-                    spatialReference: {wkid: 4326}
-                },
-                symbol: orangeLineSymbol,
-                attributes: {
-                    name: "Orange Line",
-                    description: "MBTA Orange Line"
-                },
-                popupTemplate: {
-                    title: "{name}",
-                    content: "Speed restrictions: Medium<br>Average speed: 18-20 MPH in restricted areas"
-                }
-            });
-            
-            const blueLineSymbol = new SimpleLineSymbol({
-                color: [0, 61, 165],
-                width: 4
-            });
-            
-            const blueLineGraphic = new Graphic({
-                geometry: {
-                    type: "polyline",
-                    paths: [blueLinePoints],
-                    spatialReference: {wkid: 4326}
-                },
-                symbol: blueLineSymbol,
-                attributes: {
-                    name: "Blue Line",
-                    description: "MBTA Blue Line"
-                },
-                popupTemplate: {
-                    title: "{name}",
-                    content: "Speed restrictions: Medium-Low<br>Average speed: 16-19 MPH in restricted areas"
-                }
-            });
-            
-            const greenLineSymbol = new SimpleLineSymbol({
-                color: [0, 132, 61], 
-                width: 4
-            });
-            
-            const greenLineGraphic = new Graphic({
-                geometry: {
-                    type: "polyline",
-                    paths: [greenLinePoints],
-                    spatialReference: {wkid: 4326}
-                },
-                symbol: greenLineSymbol,
-                attributes: {
-                    name: "Green Line",
-                    description: "MBTA Green Line"
-                },
-                popupTemplate: {
-                    title: "{name}",
-                    content: "Speed restrictions: Very High<br>Average speed: 7-11 MPH in restricted areas"
-                }
-            });
-            
-            // Add all lines to the graphics layer
-            mbtaRoutesLayer.add(redLineGraphic);
-            mbtaRoutesLayer.add(orangeLineGraphic);
-            mbtaRoutesLayer.add(blueLineGraphic);
-            mbtaRoutesLayer.add(greenLineGraphic);
-            
-            // Add a legend
-            const legend = new Legend({
-                view: view,
-                layerInfos: [{
-                    layer: mbtaRoutesLayer,
-                    title: "MBTA Lines"
-                }]
-            });
-            
-            const legendExpand = new Expand({
-                view: view,
-                content: legend,
-                expanded: true
-            });
-            
-            view.ui.add(legendExpand, "bottom-right");
-            
-        });
-    </script>
 </body>
 </html>
