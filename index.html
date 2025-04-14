@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBTA in Motion: A Study of Public Transit Efficiency</title>
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="https://js.arcgis.com/embeddable-components/4.32/arcgis-embeddable-components.esm.js"></script>
     <style>
         #mapDiv {
             height: 600px;
@@ -53,7 +52,8 @@
                 Understanding the root causes of these problems is essential for improving the system's reliability and efficiency.</p>
             <div class="map-container">
                 <div id="mapDiv">
-                 <arcgis-embedded-map style="height:600px;width:900px;" item-id="0ca115c5fd3e46ce97a6e31caa5457e6" theme="light" heading-enabled legend-enabled portal-url="https://nu.maps.arcgis.com" ></arcgis-embedded-map>
+                    <script type="module" src="https://js.arcgis.com/embeddable-components/4.32/arcgis-embeddable-components.esm.js"></script>
+                    <arcgis-embedded-map style="height:600px;width:700px;" item-id="0ca115c5fd3e46ce97a6e31caa5457e6" theme="light" heading-enabled legend-enabled portal-url="https://nu.maps.arcgis.com" ></arcgis-embedded-map>
                 </div>
                 <p class="map-caption">Figure: MBTA Transit System Map - Highlighting service routes, ridership (red dots), and realiability (blue scaled dot)</p>
             </div>
